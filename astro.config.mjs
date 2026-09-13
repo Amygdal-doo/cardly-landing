@@ -46,6 +46,12 @@ export default defineConfig({
     inlineStylesheets: 'auto',
   },
 
+  // These are the dev-server and preview redirects. In a static build Astro
+  // cannot emit a real 301 — it writes an HTML page carrying a meta refresh,
+  // which answers 200 and which search engines treat as a soft redirect at
+  // best. public/serve.json declares the same list again as true 301s, and
+  // `serve` matches redirects before it looks for a file, so production never
+  // reaches the meta-refresh pages. Both lists have to be edited together.
   redirects: {
     // Account deletion stays with the product: it needs a signed-in Supabase
     // session to actually delete anything. The public URL has been handed to

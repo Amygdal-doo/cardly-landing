@@ -1,4 +1,11 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/delete-account", "destination": "https://app.usecardly.app/delete-account", "type": 301 },
+    { "source": "/signin", "destination": "https://app.usecardly.app/signin", "type": 301 },
+    { "source": "/app", "destination": "https://app.usecardly.app/app", "type": 301 },
+    { "source": "/dashboard", "destination": "https://app.usecardly.app/app", "type": 301 },
+    { "source": "/settings", "destination": "https://app.usecardly.app/app/settings", "type": 301 }
+  ]
 }
