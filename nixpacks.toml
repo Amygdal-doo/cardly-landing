@@ -1,0 +1,19 @@
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+# Listen on $PORT, not a hard-coded 3000.
+#
+# Railway assigns the port and routes its proxy to it; a container that boots
+# happily on 3000 while the proxy is pointed somewhere else answers every
+# request with a 502, and the logs look completely healthy — "Accepting
+# connections" and nothing else. The fallback keeps `npm start` usable locally.
+#
+# No -s either: that flag rewrote every unmatched path to index.html, so a
+# mistyped URL served the homepage with a 200 — which is worse here than
+# anywhere, because a soft 404 that returns 200 is a page Google will index.
+# Astro emits dist/404.html and `serve` picks it up on its own.
+[start]
+cmd = "npx serve dist -l ${PORT:-3000}"

@@ -1,0 +1,571 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import CardObject from '../components/CardObject.astro';
+import { APP_URL, SIGN_IN_URL, STORE_LINKS } from '../lib/site';
+
+/**
+ * Steps are numbered because this genuinely is a sequence — you cannot share a
+ * card you have not made. Numbering anything else on this page would be
+ * decoration.
+ */
+const steps = [
+  {
+    title: 'Make your card',
+    body:
+      'Name, role, company, the ways you want to be reached. Pick a colour. It takes about a minute, and you only do it once.',
+  },
+  {
+    title: 'Hand it over',
+    body:
+      'A link, a QR code, or an NFC tap. It opens in whatever browser they already have — they do not need Cardly, an account, or anything installed.',
+  },
+  {
+    title: 'Keep the contact',
+    body:
+      'Scan their card back and Cardly reads it, tidies it and files it with a note about where you met. Change jobs and every card you have ever shared updates itself.',
+  },
+];
+
+const features = [
+  {
+    title: 'Share without asking anything of them',
+    body:
+      'Link, QR or NFC tap. It opens in any browser and works whether or not they have ever heard of Cardly.',
+  },
+  {
+    title: 'Scan theirs back',
+    body:
+      'Point the camera at a QR, a paper card or an email signature. Cardly reads it, cleans it up and files it.',
+  },
+  {
+    title: 'Contacts that stay findable',
+    body:
+      'Notes, tags and follow-up reminders on every card. Search by company, by role, or by the conference you were at.',
+  },
+  {
+    title: 'One tap from the home screen',
+    body:
+      'A widget that puts your QR code one tap away, for the moment somebody asks and you have a drink in your other hand.',
+  },
+];
+
+const included = [
+  'QR sharing and scanning',
+  'Contact management with notes and tags',
+  'Follow-up reminders',
+  'Works offline',
+  'Light and dark, following your phone',
+  'Export your data whenever you want',
+];
+---
+
+<Layout>
+  <Navbar />
+
+  <!-- ── Hero ─────────────────────────────────────────────────────────── -->
+  <header class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">For people who meet people</p>
+        <h1 class="display-hero">
+          The business card<br />you never reprint.
+        </h1>
+        <p class="lede">
+          Change your job title and every card you have ever handed out changes with it. Share by
+          link, QR or NFC — they need nothing installed to open it.
+        </p>
+
+        <div class="hero-ctas">
+          <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-primary btn-lg">
+            Create your card
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+          <a href="#how" class="btn btn-secondary btn-lg">See how it works</a>
+        </div>
+
+        <p class="small tone-tertiary hero-meta">
+          Free for one card. No card details to start.
+        </p>
+      </div>
+
+      <!--
+        The signature: the card itself, the one saturated object on the page.
+        Two of them, offset, because the whole product is the exchange — yours
+        going out, theirs coming back.
+      -->
+      <div class="hero-cards">
+        <CardObject
+          class="card-back"
+          tone="signal"
+          name="Mara Ilić"
+          role="Head of Partnerships"
+          company="Northwind"
+          email="mara@northwind.co"
+        />
+        <!--
+          The front card rewrites its own role line.
+
+          The headline claims that changing your job title changes every card
+          you have handed out. A still picture of a card cannot make that
+          claim; it can only sit next to it. So the card demonstrates it — the
+          role is replaced in place, the card is never swapped, and the caption
+          says what just happened. It is the one piece of motion on the page,
+          and it is the product's whole argument.
+        -->
+        <CardObject
+          class="card-front"
+          name="Your name"
+          role="What you do"
+          company="Your company"
+          email="you@company.com"
+        />
+        <p class="hero-live" aria-hidden="true">
+          <span class="hero-live-dot"></span>Updated. Every card already handed out says this.
+        </p>
+      </div>
+    </div>
+
+    <!--
+      A rule of facts, not a row of invented metrics. Every line here is either
+      arithmetic the reader can check or something the product does; nothing is
+      a number chosen because it looked impressive.
+    -->
+    <div class="container">
+      <ul class="facts-rule">
+        <li><span class="f-k">10 billion</span><span class="f-v">paper cards printed a year</span></li>
+        <li><span class="f-k">88%</span><span class="f-v">binned inside a week</span></li>
+        <li><span class="f-k">0</span><span class="f-v">apps they need to install</span></li>
+        <li><span class="f-k">1</span><span class="f-v">card, kept current everywhere</span></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ── Features ─────────────────────────────────────────────────────── -->
+  <section class="band" id="features">
+    <div class="container">
+      <div class="sec-head">
+        <p class="eyebrow">What's inside</p>
+        <h2 class="display-xl">Built for the handshake, not the drawer.</h2>
+        <p class="lede">
+          Paper cards go missing. Cardly keeps every introduction searchable, editable and in your
+          pocket.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        {features.map((f) => (
+          <article class="feature">
+            <h3 class="display-s">{f.title}</h3>
+            <p class="body tone-secondary">{f.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How it works ─────────────────────────────────────────────────── -->
+  <section class="band" id="how">
+    <div class="container">
+      <div class="sec-head">
+        <p class="eyebrow">How it works</p>
+        <h2 class="display-xl">Three things, then you stop thinking about it.</h2>
+      </div>
+
+      <ol class="steps">
+        {steps.map((s, i) => (
+          <li class="step">
+            <span class="step-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3 class="display-m">{s.title}</h3>
+              <p class="body tone-secondary">{s.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <figure class="shot">
+        <img src="/assets/hero-mockup.png" alt="The Cardly app showing a card ready to share" loading="lazy" />
+        <figcaption class="caption tone-tertiary">
+          Your card, the QR to hand over, and everyone you have met — in one place.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ── Impact ───────────────────────────────────────────────────────── -->
+  <section class="band band-solid eco-band" id="impact">
+    <div class="container">
+      <div class="eco-grid">
+        <div>
+          <p class="eyebrow eco-eyebrow">Impact</p>
+          <h2 class="display-xl">A handshake shouldn't cost a tree.</h2>
+          <p class="lede">
+            Ten billion paper business cards are printed every year and most are thrown away inside
+            a week. Every card Cardly replaces is one that was never printed — that is the entire
+            claim, and it is the only one we make.
+          </p>
+
+          <div class="eco-ctas">
+            <a href="/impact" class="btn btn-primary">See the arithmetic</a>
+            <a href="#pricing" class="btn btn-ghost">Plans</a>
+          </div>
+        </div>
+
+        <!--
+          A calculator, not a scoreboard. The inputs are visible, so a reader
+          who disagrees with 200 cards a year can substitute their own number
+          and still trust the result.
+        -->
+        <div class="calc surface">
+          <p class="eyebrow">Per 1,000 people, per year</p>
+          <dl class="calc-rows">
+            <div><dt>Paper cards printed per person</dt><dd>200</dd></div>
+            <div><dt>Cards not printed</dt><dd>200,000</dd></div>
+            <div><dt>Sheets of card stock saved</dt><dd>~20,000</dd></div>
+            <div class="calc-total"><dt>Trees not felled</dt><dd>~2.4</dd></div>
+          </dl>
+          <p class="caption tone-tertiary">
+            Ten cards to a sheet, 8,333 sheets to a tree. Round numbers, shown so you can check them.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Pricing ──────────────────────────────────────────────────────── -->
+  <section class="band" id="pricing">
+    <div class="container">
+      <div class="sec-head">
+        <p class="eyebrow">Pricing</p>
+        <h2 class="display-xl">Free for one card. Pay when you need more.</h2>
+      </div>
+
+      <div class="plans">
+        <article class="plan">
+          <h3 class="display-s">Free</h3>
+          <p class="price">$0<span>forever</span></p>
+          <p class="body tone-secondary">One card, yours to share anywhere.</p>
+          <ul class="plan-list">
+            <li>1 card</li>
+            <li>QR sharing and scanning</li>
+            <li>All the core features</li>
+          </ul>
+          <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-secondary btn-block">Get the app</a>
+        </article>
+
+        <article class="plan">
+          <h3 class="display-s">Monthly</h3>
+          <p class="price">$4.99<span>a month</span></p>
+          <p class="body tone-secondary">For anyone carrying more than one hat.</p>
+          <ul class="plan-list">
+            <li>Unlimited cards</li>
+            <li>Colours, themes and your logo</li>
+            <li>Priority support</li>
+          </ul>
+          <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-secondary btn-block">Start monthly</a>
+        </article>
+
+        <article class="plan plan-featured">
+          <span class="chip chip-signal plan-flag">Save 16%</span>
+          <h3 class="display-s">Yearly</h3>
+          <p class="price">$49.99<span>a year</span></p>
+          <p class="body tone-secondary">Everything in Monthly, twelve months for the price of ten.</p>
+          <ul class="plan-list">
+            <li>Everything in Monthly</li>
+            <li>Unlimited cards</li>
+            <li>Priority support</li>
+          </ul>
+          <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-primary btn-block">Go yearly</a>
+        </article>
+      </div>
+
+      <div class="included">
+        <p class="eyebrow">In every plan, including the free one</p>
+        <ul class="included-list">
+          {included.map((i) => <li>{i}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Teams ────────────────────────────────────────────────────────── -->
+  <section class="band band-solid team-band">
+    <div class="container team-grid">
+      <div>
+        <p class="eyebrow">Team accounts</p>
+        <h2 class="display-xl">One company pays. Everyone gets Pro.</h2>
+        <p class="lede">
+          Create your company, buy seats and invite people by email — all on the web. Their Pro plan
+          is covered the moment they accept. Your own seat is free: you pay for the people you
+          invite, and nobody is promised a seat that isn't there.
+        </p>
+        <div class="team-ctas">
+          <a href={`${APP_URL}/app/company`} class="btn btn-primary">Set up your company</a>
+          <a href={SIGN_IN_URL} class="btn btn-ghost">Sign in first</a>
+        </div>
+      </div>
+
+      <ul class="team-facts">
+        <li><strong>Invite by email.</strong> They get a link; opening it puts them on the team.</li>
+        <li><strong>Two roles.</strong> Admins invite and manage; members just get their card.</li>
+        <li><strong>Your logo on their cards.</strong> Opt-in, so nobody's design changes without them.</li>
+        <li><strong>Buy seats on the web.</strong> A company card on a laptop, with an invoice, not a purchase on somebody's phone.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Close ────────────────────────────────────────────────────────── -->
+  <section class="band-tight">
+    <div class="container">
+      <div class="close">
+        <h2 class="display-xl">Your next handshake deserves better than paper.</h2>
+        <div class="close-ctas">
+          <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-primary btn-lg">Create your card</a>
+          <a href={STORE_LINKS.ios} class="btn btn-secondary btn-lg">App Store</a>
+          <a href={STORE_LINKS.android} class="btn btn-secondary btn-lg">Google Play</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* ── Hero ──────────────────────────────────────────────────────────── */
+  .hero { padding-top: clamp(48px, 8vh, 96px); }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+  }
+  .hero-copy .eyebrow { margin-bottom: var(--space-lg); }
+  .hero-copy .display-hero { margin-bottom: var(--space-lg); }
+  .hero-ctas { display: flex; gap: var(--space-md); flex-wrap: wrap; margin-top: var(--space-xl); }
+  .hero-meta { margin-top: var(--space-base); }
+
+  .hero-cards { position: relative; min-width: 0; padding: 6% 4% 12%; }
+  /* The live-role caption sits under the cards, tied to them by the dot rather
+     than by a heading — it is a status line, not a feature claim. */
+  .hero-live {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: var(--space-base) 0 0;
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--ink-3);
+    opacity: 0;
+    transition: opacity .4s ease;
+  }
+  .hero-live.is-on { opacity: 1; }
+  .hero-live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--signal) 60%, transparent);
+    animation: hero-pulse 2s ease-out infinite;
+  }
+  @keyframes hero-pulse {
+    0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--signal) 55%, transparent); }
+    70%  { box-shadow: 0 0 0 7px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  /* The role swaps rather than fades through nothing, so the card never looks
+     blank mid-change. */
+  .hero-cards :global(.card-front .co-role) { transition: opacity .28s ease; }
+  .hero-cards :global(.card-front.is-swapping .co-role) { opacity: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-live-dot { animation: none; }
+    .hero-cards :global(.card-front .co-role) { transition: none; }
+  }
+
+  /* Offset rather than stacked square: the exchange is two cards passing, and
+     a neat pile would say "wallet" instead. */
+  .hero-cards :global(.card-back) {
+    position: absolute;
+    inset: 0 14% 22% 0;
+    transform: rotate(-6deg);
+    opacity: 0.96;
+  }
+  .hero-cards :global(.card-front) { position: relative; transform: rotate(2.5deg); margin-top: 18%; }
+
+  .facts-rule {
+    list-style: none;
+    margin: clamp(48px, 8vh, 88px) 0 0;
+    padding: var(--space-xl) 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+  }
+  .facts-rule li { display: flex; flex-direction: column; gap: 4px; }
+  .f-k { font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: -0.03em; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .f-v { font-size: 13px; line-height: 18px; color: var(--ink-3); }
+
+  /* ── Section heads ─────────────────────────────────────────────────── */
+  .sec-head { max-width: 640px; margin-bottom: clamp(32px, 5vw, 56px); }
+  .sec-head .eyebrow { margin-bottom: var(--space-base); }
+  .sec-head .lede { margin-top: var(--space-base); }
+
+  /* ── Features ──────────────────────────────────────────────────────── */
+  .feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden; }
+  .feature { background: var(--card); padding: var(--space-xl); display: flex; flex-direction: column; gap: var(--space-sm); }
+
+  /* ── Steps ─────────────────────────────────────────────────────────── */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-xl); }
+  .step { display: flex; flex-direction: column; gap: var(--space-md); border-top: 2px solid var(--accent); padding-top: var(--space-base); }
+  .step-n { font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 1.4px; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .step h3 { margin-bottom: 6px; }
+
+  /* A phone screenshot is phone-shaped. Rendered at container width it ran for
+     two viewports and became the section instead of illustrating it. */
+  .shot { margin: clamp(40px, 6vw, 64px) auto 0; max-width: 300px; text-align: center; }
+  .shot img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sheet);
+    border: 1px solid var(--line-2);
+    background: var(--card);
+    box-shadow: var(--shadow-md);
+  }
+  .shot figcaption { margin-top: var(--space-base); }
+
+  /* ── Impact ────────────────────────────────────────────────────────── */
+  /* Ecology is the one claim allowed the success colour, and it gets it
+     nowhere else on the site. */
+  .eco-band { background: var(--stock-2); border-block: 1px solid var(--line); }
+  .eco-eyebrow { color: var(--success); }
+  .eco-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr); gap: clamp(32px, 5vw, 64px); align-items: center; }
+  .eco-ctas { display: flex; gap: var(--space-md); flex-wrap: wrap; margin-top: var(--space-xl); }
+  .eco-grid .display-xl { margin: var(--space-base) 0 var(--space-base); }
+
+  .calc { display: flex; flex-direction: column; gap: var(--space-base); }
+  .calc-rows { margin: 0; display: flex; flex-direction: column; }
+  .calc-rows > div { display: flex; justify-content: space-between; gap: var(--space-md); padding: 11px 0; border-bottom: 1px solid var(--line); }
+  .calc-rows dt { font-size: 14px; color: var(--ink-2); }
+  .calc-rows dd { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .calc-total { border-bottom: 0 !important; }
+  .calc-total dt { color: var(--ink); font-weight: 500; }
+  .calc-total dd { color: var(--success); font-size: 20px; }
+
+  /* ── Pricing ───────────────────────────────────────────────────────── */
+  .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-base); align-items: start; }
+  .plan {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    height: 100%;
+  }
+  /* The recommended plan is marked by a heavier border, not a coloured fill —
+     spending the accent on a whole panel is what makes a pricing table shout. */
+  .plan-featured { border-color: var(--accent); border-width: 2px; }
+  /* The flag straddles the panel's own border, so it has to paint over it.
+     `chip-signal` is a 10%-alpha tint, which let the blue border show straight
+     through the badge and read as a line drawn across the price. Solid fill and
+     an explicit stacking order fix both. */
+  .plan-flag {
+    position: absolute;
+    top: -12px;
+    left: var(--space-xl);
+    z-index: 1;
+    background: var(--signal);
+    color: #fff;
+    border: 0;
+    box-shadow: 0 0 0 3px var(--card);
+  }
+  .price { font-family: var(--font-display); font-weight: 700; font-size: 34px; letter-spacing: -0.03em; margin: 0; }
+  .price span { display: block; font-family: var(--font-body); font-weight: 400; font-size: 13px; letter-spacing: 0; color: var(--ink-3); margin-top: 2px; }
+  .plan-list { list-style: none; margin: var(--space-sm) 0 auto; padding: 0; display: flex; flex-direction: column; gap: var(--space-sm); }
+  .plan-list li { font-size: 14px; color: var(--ink-2); padding-left: 20px; position: relative; }
+  .plan-list li::before { content: ''; position: absolute; left: 0; top: 8px; width: 9px; height: 5px; border-left: 1.5px solid var(--accent); border-bottom: 1.5px solid var(--accent); transform: rotate(-45deg); }
+  .plan .btn { margin-top: var(--space-base); }
+
+  .included { margin-top: var(--space-xxl); padding-top: var(--space-xl); border-top: 1px solid var(--line); }
+  .included .eyebrow { margin-bottom: var(--space-base); }
+  .included-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-sm) var(--space-base); }
+  .included-list li { font-size: 14px; color: var(--ink-2); }
+  .included-list li + li::before { content: '·'; margin-right: var(--space-base); color: var(--ink-3); }
+
+  /* ── Teams ─────────────────────────────────────────────────────────── */
+  .team-band { background: var(--stock-2); border-block: 1px solid var(--line); }
+  .team-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr); gap: clamp(32px, 5vw, 64px); align-items: center; }
+  .team-grid .display-xl { margin: var(--space-base) 0; }
+  .team-ctas { display: flex; gap: var(--space-md); flex-wrap: wrap; margin-top: var(--space-xl); }
+  .team-facts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-base); }
+  .team-facts li { font-size: 14px; line-height: 21px; color: var(--ink-2); padding-left: var(--space-base); border-left: 2px solid var(--line-2); }
+  .team-facts strong { color: var(--ink); font-weight: 600; }
+
+  /* ── Close ─────────────────────────────────────────────────────────── */
+  .close { text-align: center; max-width: 720px; margin-inline: auto; }
+  .close-ctas { display: flex; gap: var(--space-md); flex-wrap: wrap; justify-content: center; margin-top: var(--space-xl); }
+
+  /* ── Responsive ────────────────────────────────────────────────────── */
+  @media (max-width: 980px) {
+    /* minmax(0, 1fr): plain `1fr` is minmax(auto, 1fr), and auto is
+       min-content — which is how a headline set the page width. */
+    .hero-grid, .eco-grid, .team-grid { grid-template-columns: minmax(0, 1fr); }
+    .hero-cards { max-width: 460px; padding-bottom: 16%; }
+    .steps { grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); }
+    .plans { grid-template-columns: minmax(0, 1fr); }
+    .plan-featured { order: -1; }
+  }
+  @media (max-width: 720px) {
+    .feature-grid { grid-template-columns: minmax(0, 1fr); }
+    .facts-rule { grid-template-columns: 1fr 1fr; gap: var(--space-base) var(--space-lg); }
+    .f-k { font-size: 22px; }
+  }
+</style>
+
+<script>
+  /**
+   * The hero's one moving part.
+   *
+   * The headline says a job title changes everywhere at once. Rather than
+   * asserting it beside a still card, the card performs it: the role line is
+   * replaced in place while the card stays put, and a status line confirms it
+   * the way the app would.
+   *
+   * Deliberately slow — one change every four seconds. Faster reads as a
+   * carousel, which would say "here are some cards" instead of "this is one
+   * card, changing".
+   */
+  const ROLES = [
+    'What you do',
+    'Head of Partnerships',
+    'VP, Partnerships',
+    'Co-founder',
+  ];
+
+  const card = document.querySelector<HTMLElement>('.card-front');
+  const role = card?.querySelector<HTMLElement>('.co-role');
+  const live = document.querySelector<HTMLElement>('.hero-live');
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (card && role && !still) {
+    let i = 0;
+    setInterval(() => {
+      card.classList.add('is-swapping');
+      setTimeout(() => {
+        i = (i + 1) % ROLES.length;
+        role.textContent = ROLES[i];
+        card.classList.remove('is-swapping');
+        // The status line appears only after the first real change, so it is
+        // never claiming something the reader has not seen happen.
+        live?.classList.add('is-on');
+      }, 280);
+    }, 4000);
+  }
+</script>

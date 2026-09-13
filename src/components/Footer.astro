@@ -1,0 +1,100 @@
+---
+import { APP_URL, CONTACT_EMAIL, DELETE_ACCOUNT_URL, SIGN_IN_URL } from '../lib/site';
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="/" class="brand">
+          <svg class="cardly-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#cardly-mark" /></svg>
+          <span>Cardly</span>
+        </a>
+        <p class="small tone-tertiary">
+          One card, kept current, shared by link, QR or NFC. Nothing to reprint when your title
+          changes.
+        </p>
+      </div>
+
+      <div class="foot-col">
+        <h2 class="eyebrow">Product</h2>
+        <a href="/#features">Features</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/impact">Impact</a>
+        <a href={SIGN_IN_URL}>Sign in</a>
+      </div>
+
+      <div class="foot-col">
+        <h2 class="eyebrow">Company</h2>
+        <a href={`${APP_URL}/app/company`}>Team accounts</a>
+        <a href="/contact">Contact</a>
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+      </div>
+
+      <div class="foot-col">
+        <h2 class="eyebrow">Legal</h2>
+        <a href="/privacy">Privacy</a>
+        <a href={DELETE_ACCOUNT_URL}>Delete your account</a>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>&copy; {year} Cardly, by Amygdal.</span>
+      <!--
+        This slot used to read "1% for the Planet member". That is a paid
+        membership with a public directory, and Cardly is not in it. Replaced
+        with the claim the product can actually stand behind.
+      -->
+      <span class="eco">
+        <span class="chip-dot"></span>
+        A card you never reprint
+      </span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer { border-top: 1px solid var(--line); padding: var(--space-band) 0 var(--space-xxl); margin-top: var(--space-band); }
+
+  .foot-grid { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: var(--space-xxl); }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: -0.03em;
+  }
+  .brand svg { width: 26px; height: 26px; }
+
+  .foot-brand p { margin-top: var(--space-md); max-width: 34ch; }
+
+  .foot-col h2 { margin-bottom: var(--space-base); }
+  .foot-col a { display: block; padding: 6px 0; font-size: 14px; color: var(--ink-2); }
+  .foot-col a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
+  .foot-bottom {
+    margin-top: var(--space-xxl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+  /* Ecology is the one claim allowed to carry the success colour. */
+  .eco { display: inline-flex; align-items: center; gap: 7px; color: var(--success); }
+
+  @media (max-width: 860px) {
+    .foot-grid { grid-template-columns: 1fr 1fr; gap: var(--space-xl); }
+    .foot-brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 460px) {
+    .foot-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

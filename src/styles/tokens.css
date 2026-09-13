@@ -1,0 +1,262 @@
+/**
+ * Cardly marketing tokens — "Forest & Paper".
+ *
+ * This is the marketing site's palette and it deliberately diverges from the
+ * product's. The app and cardly-landing-astro run "Ink & Stock": cool card
+ * stock, near-black text, pen-ink blue for every action. That system is intact
+ * and unchanged — nothing here is ported back, and constants/design.ts in the
+ * mobile repo is still the source of truth for it.
+ *
+ * ── Why the accent moved from blue to green ──────────────────────────────
+ * The pitch on these pages is that a Cardly card is never printed and never
+ * reprinted. The palette now says the same thing before a word is read: the
+ * ground is recycled paper rather than cool stock, the text is a near-black
+ * that carries a green cast, and every action is deep forest.
+ *
+ * ── The rule that still has to hold ──────────────────────────────────────
+ * Ink & Stock reserved green for ecology alone, so the numbers on /impact read
+ * as a separate claim rather than more marketing colour. Turning the whole
+ * site green would have thrown that away — which is the one real cost of this
+ * direction, and it is paid for deliberately:
+ *
+ *   - The accent is a DEEP forest (#1E5B3F). It is a control colour: buttons,
+ *     links, focus rings.
+ *   - Ecology keeps a distinctly BRIGHTER leaf (#3E9B62 / #2F7A4B). Measured
+ *     at 2.31:1 against the accent, which is enough separation that an impact
+ *     figure does not read as another button.
+ *   - The warm terracotta `signal` is untouched and still rationed to two
+ *     jobs: the card object's own face, and states that must be noticed.
+ *
+ * Spend the boldness on the card. Everything around it stays quiet.
+ *
+ * ── Contrast ─────────────────────────────────────────────────────────────
+ * Every value that carries text was checked against its ground for WCAG AA.
+ * Three are worth knowing about, because they are easy to reintroduce:
+ *
+ *   --ink-3      muted text. The obvious #7D8B81 measured 3.27:1 and failed;
+ *                this is #5F6D63 at 4.99:1.
+ *   --success    3.17:1 on paper. That passes only as LARGE text — it is for
+ *                the impact figures and tint fills. For small ecology text use
+ *                --success-ink (4.80:1).
+ *   --signal     3.38:1 on paper, and left that way on purpose. It is a fill
+ *                colour with white on top, not a text colour. Same as it has
+ *                always been in Ink & Stock.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* ── Accent: deep forest ───────────────────────────────────────────────
+     Named --accent rather than --green. This variable was called --blue right
+     up until the value stopped being blue; a hue in the name is a promise the
+     next redesign breaks. */
+  --accent: #1E5B3F;
+  --accent-2: #2E7D5A;
+  --accent-ink: #17492F;
+  /* Tint backgrounds, spelled out rather than hex+alpha so they composite
+     correctly over any ground. */
+  --accent-tint: rgba(30, 91, 63, 0.08);
+  --accent-tint-2: rgba(30, 91, 63, 0.14);
+
+  /* ── Signal: terracotta. Unchanged from Ink & Stock. ─────────────────── */
+  --signal: #D9603A;
+  --signal-2: #E8825F;
+  --signal-ink: #B84A28;
+  --signal-tint: rgba(217, 96, 58, 0.10);
+
+  /* ── Ground: recycled paper, not cool stock. ─────────────────────────── */
+  --stock: #F6F5F0;
+  --stock-2: #EDEBE3;
+  --stock-3: #E2DFD4;
+
+  /* ── Ink: near-black with a green cast, so text sits in the same family
+         as the ground rather than on top of it. ───────────────────────── */
+  --ink: #14201A;
+  --ink-2: #46564C;
+  --ink-3: #5F6D63;
+
+  --line: #E4E1D7;
+  --line-2: #CFCBBD;
+
+  --card: #FFFFFF;
+
+  /* ── Ecology, and only ecology. ──────────────────────────────────────── */
+  --success: #3E9B62;
+  --success-ink: #2F7A4B;
+  --success-tint: rgba(62, 155, 98, 0.12);
+
+  --warning: #B45309;
+  --error: #B42318;
+  --error-tint: rgba(180, 35, 24, 0.08);
+
+  /* Text that sits on a filled accent or signal surface. */
+  --on-accent: #FFFFFF;
+
+  /* ── The card object ───────────────────────────────────────────────────
+     The card face is deliberately NOT built from --accent / --signal.
+     Those are *interface* colours and they lift in dark mode so controls stay
+     legible on a dark ground. A card is not an interface surface — it is an
+     object lying on the page, and the palette's whole premise is that it is
+     the one saturated thing on screen. Driven by the lifted values it came out
+     pale and washed out in dark mode, which is the opposite of the intent.
+     So the faces get their own values: deep in both themes, nudged just far
+     enough in dark to separate from the near-black ground. */
+  --face-accent-a: #1E5B3F;
+  --face-accent-b: #17492F;
+  --face-signal-a: #D9603A;
+  --face-signal-b: #B84A28;
+
+  /* ── Type ──────────────────────────────────────────────────────────── */
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* ── Space ─────────────────────────────────────────────────────────── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-base: 16px;
+  --space-lg: 20px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+  --space-section: 36px;
+  --space-band: 56px;
+
+  /* ── Shape ─────────────────────────────────────────────────────────── */
+  --radius-control: 12px;
+  --radius-card: 16px;
+  --radius-sheet: 24px;
+  --radius-pill: 999px;
+
+  /* Screen gutter. One value, used everywhere, so nothing drifts. */
+  --gutter: 20px;
+  --measure: 1180px;
+
+  /* ── Elevation ─────────────────────────────────────────────────────────
+     A tool's surfaces sit on the page rather than float above it, so shadows
+     are shallow and neutral. The one exception is the card object, which is
+     allowed to cast a real shadow because it is a physical thing.
+     Tinted with the ink hue, so a shadow on paper does not read as grey. */
+  --shadow-sm: 0 1px 2px rgba(20, 32, 26, 0.05);
+  --shadow-md: 0 4px 16px -6px rgba(20, 32, 26, 0.12);
+  --shadow-card: 0 24px 48px -20px rgba(20, 32, 26, 0.28);
+
+  /* Vertical rhythm for page bands. */
+  --band-y: 80px;
+  --band-y-tight: 60px;
+}
+
+/**
+ * Dark — forest floor, not graphite.
+ *
+ * The ground keeps the green cast rather than going neutral, so the two themes
+ * read as one palette at different times of day. Accent and signal are both
+ * lifted in lightness to stay legible on a dark ground; on a lifted accent,
+ * near-black reads better than white.
+ *
+ * Defined in two places on purpose: the media query follows the operating
+ * system, and [data-theme] lets an explicit choice win in either direction.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --accent: #5FBF8C;
+    --accent-2: #86D3A9;
+    --accent-ink: #9BDCB8;
+    --accent-tint: rgba(95, 191, 140, 0.14);
+    --accent-tint-2: rgba(95, 191, 140, 0.22);
+
+    --signal: #EE7A50;
+    --signal-2: #F49C7B;
+    --signal-ink: #F4936F;
+    --signal-tint: rgba(238, 122, 80, 0.16);
+
+    --stock: #0C120E;
+    --stock-2: #131B16;
+    --stock-3: #1B241E;
+
+    --ink: #E8EFE9;
+    --ink-2: rgba(232, 239, 233, 0.68);
+    --ink-3: rgba(232, 239, 233, 0.46);
+
+    --line: rgba(232, 239, 233, 0.10);
+    --line-2: rgba(232, 239, 233, 0.18);
+
+    --card: #161F19;
+
+    --success: #4ECF8E;
+    --success-ink: #6FDCA5;
+    --success-tint: rgba(78, 207, 142, 0.16);
+
+    --warning: #E89A3C;
+    --error: #F1756B;
+    --error-tint: rgba(241, 117, 107, 0.12);
+
+    /* On a lifted accent, near-black reads better than white. */
+    --on-accent: #0C120E;
+
+    /* Lifted just enough to separate from the near-black ground, still
+       saturated. See the note in :root. */
+    --face-accent-a: #235C3E;
+    --face-accent-b: #17492F;
+    --face-signal-a: #C9552F;
+    --face-signal-b: #A03F20;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 16px -6px rgba(0, 0, 0, 0.6);
+    --shadow-card: 0 24px 48px -20px rgba(0, 0, 0, 0.8);
+  }
+}
+
+:root[data-theme='dark'] {
+  --accent: #5FBF8C;
+  --accent-2: #86D3A9;
+  --accent-ink: #9BDCB8;
+  --accent-tint: rgba(95, 191, 140, 0.14);
+  --accent-tint-2: rgba(95, 191, 140, 0.22);
+
+  --signal: #EE7A50;
+  --signal-2: #F49C7B;
+  --signal-ink: #F4936F;
+  --signal-tint: rgba(238, 122, 80, 0.16);
+
+  --stock: #0C120E;
+  --stock-2: #131B16;
+  --stock-3: #1B241E;
+
+  --ink: #E8EFE9;
+  --ink-2: rgba(232, 239, 233, 0.68);
+  --ink-3: rgba(232, 239, 233, 0.46);
+
+  --line: rgba(232, 239, 233, 0.10);
+  --line-2: rgba(232, 239, 233, 0.18);
+
+  --card: #161F19;
+
+  --success: #4ECF8E;
+  --success-ink: #6FDCA5;
+  --success-tint: rgba(78, 207, 142, 0.16);
+
+  --warning: #E89A3C;
+  --error: #F1756B;
+  --error-tint: rgba(241, 117, 107, 0.12);
+
+  --on-accent: #0C120E;
+
+  /* Lifted just enough to separate from the near-black ground, still
+     saturated. See the note in :root. */
+  --face-accent-a: #235C3E;
+  --face-accent-b: #17492F;
+  --face-signal-a: #C9552F;
+  --face-signal-b: #A03F20;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px -6px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 24px 48px -20px rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 860px) {
+  :root {
+    --band-y: 56px;
+    --band-y-tight: 44px;
+    --gutter: 18px;
+  }
+}

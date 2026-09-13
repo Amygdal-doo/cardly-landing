@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { APP_URL, CONTACT_EMAIL, DELETE_ACCOUNT_URL } from '../lib/site';
+---
+
+<Layout title="Contact — Cardly" description="Questions, problems or ideas — how to reach the people who build Cardly.">
+  <Navbar />
+
+  <main id="main" class="band">
+    <div class="container">
+      <header class="head">
+        <p class="eyebrow">Get in touch</p>
+        <h1 class="display-hero">Talk to us.</h1>
+        <p class="lede">
+          A small team builds Cardly, and the same people answer the email. Tell us what happened
+          and we'll tell you what we can do about it.
+        </p>
+      </header>
+
+      <div class="grid">
+        <!--
+          This form used to post to "#", which quietly discarded every message
+          somebody took the trouble to write. The site is a static build with
+          no server to receive a POST, so rather than pretend, the form composes
+          the message and hands it to the visitor's mail client — where they can
+          see it, edit it, and know it was actually sent.
+        -->
+        <form class="surface" id="contact-form" novalidate>
+          <div class="field">
+            <label for="name">Your name</label>
+            <input type="text" id="name" autocomplete="name" required placeholder="Mara Ilić" />
+          </div>
+
+          <div class="field">
+            <label for="email">Your email</label>
+            <input type="email" id="email" autocomplete="email" required placeholder="you@company.com" />
+            <span class="field-hint">So we can reply.</span>
+          </div>
+
+          <div class="field">
+            <label for="subject">What's it about</label>
+            <select id="subject">
+              <option value="Question">A question</option>
+              <option value="Something is broken">Something is broken</option>
+              <option value="Billing">Billing</option>
+              <option value="Team accounts">Team accounts</option>
+              <option value="Partnership">Partnership</option>
+              <option value="Feedback">Feedback</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" rows="6" required placeholder="What's going on?"></textarea>
+          </div>
+
+          <div class="note" id="form-note" role="status" hidden></div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-lg" id="send">
+            Open this in your email
+          </button>
+          <p class="caption tone-tertiary">
+            This opens your mail app with the message ready to send, addressed to {CONTACT_EMAIL}.
+            Nothing leaves your device until you press send there.
+          </p>
+        </form>
+
+        <aside class="side">
+          <section class="surface-quiet stack-sm">
+            <p class="eyebrow">Email</p>
+            <a href={`mailto:${CONTACT_EMAIL}`} class="big-link">{CONTACT_EMAIL}</a>
+            <p class="small tone-secondary">
+              Write directly if you'd rather skip the form. Same inbox either way.
+            </p>
+          </section>
+
+          <section class="surface-quiet stack-sm">
+            <p class="eyebrow">When we reply</p>
+            <p class="body">Weekdays, usually within a day.</p>
+            <p class="small tone-tertiary">
+              We're in Amsterdam, so that's CET. Weekend messages get picked up on Monday.
+            </p>
+          </section>
+
+          <section class="surface-quiet stack-sm">
+            <p class="eyebrow">Before you write</p>
+            <ul class="quick">
+              <li><a href="/privacy">What we do with your data</a></li>
+              <li><a href={DELETE_ACCOUNT_URL}>Delete your account</a></li>
+              <li><a href={`${APP_URL}/app/company`}>Set up a team account</a></li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .head { max-width: 620px; margin-bottom: clamp(32px, 5vw, 56px); }
+  .head .eyebrow { margin-bottom: var(--space-base); }
+  .head .lede { margin-top: var(--space-base); }
+
+  .grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr); gap: var(--space-xl); align-items: start; }
+  form.surface { display: flex; flex-direction: column; gap: var(--space-base); }
+  textarea { resize: vertical; min-height: 120px; }
+
+  .side { display: flex; flex-direction: column; gap: var(--space-base); }
+  .big-link { font-family: var(--font-display); font-weight: 600; font-size: 17px; color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+  .quick { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-sm); }
+  .quick a { font-size: 14px; color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
+  .quick a:hover { color: var(--ink); }
+
+  @media (max-width: 900px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+</style>
+
+<script>
+  import { CONTACT_EMAIL } from '../lib/site';
+  import { $, note } from '../lib/ui';
+
+  $<HTMLFormElement>('#contact-form')!.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const noteEl = $('#form-note');
+
+    const name = ($('#name') as HTMLInputElement).value.trim();
+    const email = ($('#email') as HTMLInputElement).value.trim();
+    const subject = ($('#subject') as HTMLSelectElement).value;
+    const message = ($('#message') as HTMLTextAreaElement).value.trim();
+
+    if (!name) { note(noteEl, 'Tell us your name.'); $('#name')!.focus(); return; }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      note(noteEl, 'We need a valid email address to reply to.');
+      $('#email')!.focus();
+      return;
+    }
+    if (!message) { note(noteEl, 'Add a message.'); $('#message')!.focus(); return; }
+
+    const body = `${message}\n\n—\n${name}\n${email}`;
+    location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Cardly — ${subject}`)}&body=${encodeURIComponent(body)}`;
+
+    note(
+      noteEl,
+      `Your email app should be opening with this message. If it didn't, write to ${CONTACT_EMAIL} directly.`,
+      'success',
+    );
+  });
+</script>

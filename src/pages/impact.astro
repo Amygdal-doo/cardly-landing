@@ -1,0 +1,290 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { CONTACT_EMAIL, SIGN_IN_URL } from '../lib/site';
+
+/**
+ * ── A note on what this page no longer says ──────────────────────────────
+ *
+ * The previous version claimed the numbers were "audited quarterly by South
+ * Pole", that Cardly runs "carbon-neutral servers", commissions an
+ * "independent security audit, yearly", publishes a report every six months,
+ * belongs to 1% for the Planet, and had saved 12,847 trees and 184 tonnes of
+ * CO₂e to date.
+ *
+ * Naming a real verification firm that has not verified you is not a marketing
+ * flourish, and specific environmental totals with no measurement behind them
+ * are what green-claims rules exist to catch. All of it is gone.
+ *
+ * What is left is the part that survives scrutiny: the industry problem, which
+ * is published and citable; the lifecycle of a paper card, which is a
+ * description rather than a claim; arithmetic with every input on screen; and
+ * commitments that are statements about how the product is built and can be
+ * checked by using it.
+ *
+ * When any of the removed claims becomes true and documented, put it back with
+ * its evidence next to it.
+ */
+
+const lifecycle = [
+  { step: 'Harvest', body: 'Trees felled for virgin pulp, or bleached recycled stock.' },
+  { step: 'Print', body: 'Offset presses, solvent inks, foil and die-cuts. All of it energy-hungry.' },
+  { step: 'Ship', body: 'Boxes moved by road and air to offices and homes.' },
+  { step: 'Exchange', body: 'Handed over, pocketed, forgotten. Most never reach a CRM.' },
+  { step: 'Landfill', body: 'Coated, laminated or foil-stamped, and usually not recyclable.' },
+];
+
+const commitments = [
+  {
+    head: 'Nothing is shipped',
+    body:
+      'There is no Cardly merchandise, no starter pack, no NFC card in a padded envelope. A card is a link, and links do not travel by van.',
+  },
+  {
+    head: 'Your contacts live on your device',
+    body:
+      'Cards and contacts are stored on the phone and synced, not warehoused for analysis. Less data held is less data to power.',
+  },
+  {
+    head: 'The free tier is not a trial',
+    body:
+      'One card, free, indefinitely, with the core features in it. A paper card costs money to print; the replacement should not cost money to hold.',
+  },
+  {
+    head: 'It works offline',
+    body:
+      'A shared QR stays valid without a signal. Nobody has to be online for the exchange to work, and nothing is re-fetched to make it happen.',
+  },
+  {
+    head: 'No ad SDKs, no data brokers',
+    body:
+      'Cardly does not sell contact data and does not embed advertising trackers. Read the privacy policy — it is written in plain sentences.',
+  },
+  {
+    head: 'Your data comes out again',
+    body:
+      'Export what you have put in, and delete the account outright when you want to. Both are in the app, not behind an email request.',
+  },
+];
+---
+
+<Layout
+  title="Impact — Cardly"
+  description="Ten billion paper business cards a year, most binned within a week. Here is the arithmetic behind replacing one with a link."
+>
+  <Navbar />
+
+  <main id="main">
+    <!-- ── Opening ──────────────────────────────────────────────────── -->
+    <header class="band">
+      <div class="container">
+        <p class="eyebrow eco">Impact</p>
+        <h1 class="display-hero">A handshake shouldn't cost a tree.</h1>
+        <p class="lede open-lede">
+          Around ten billion paper business cards are printed each year, and the large majority are
+          thrown away within a week of being handed over. Replacing one with a link is a small
+          thing. Ten billion small things is not.
+        </p>
+      </div>
+    </header>
+
+    <!-- ── The comparison ───────────────────────────────────────────── -->
+    <section class="band-tight">
+      <div class="container">
+        <div class="compare">
+          <article class="compare-side old">
+            <p class="eyebrow">The old way</p>
+            <h2 class="display-m">A paper card</h2>
+            <p class="body tone-secondary">
+              Printed in a batch of 500, of which you will hand out perhaps 200 before your title
+              changes and the rest go in a drawer. Then you order another 500.
+            </p>
+            <p class="small tone-tertiary">Five steps, every time. See below.</p>
+          </article>
+
+          <article class="compare-side new">
+            <p class="eyebrow eco">The new way</p>
+            <h2 class="display-m">One link</h2>
+            <p class="body tone-secondary">
+              Made once, updated whenever you like, handed over as many times as you want. Your
+              title changes and every copy already in the world changes with it.
+            </p>
+            <p class="small tone-tertiary">One step: share.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Lifecycle. A description, not a claim. ───────────────────── -->
+    <section class="band band-solid eco-band">
+      <div class="container">
+        <div class="sec-head">
+          <p class="eyebrow">Lifecycle</p>
+          <h2 class="display-xl">What actually happens to a paper card.</h2>
+          <p class="lede">
+            Every printed card makes the same journey. Cardly does not make it shorter — it removes
+            it.
+          </p>
+        </div>
+
+        <ol class="life">
+          {lifecycle.map((l, i) => (
+            <li>
+              <span class="life-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="display-s">{l.step}</h3>
+              <p class="small tone-secondary">{l.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- ── The arithmetic ───────────────────────────────────────────── -->
+    <section class="band">
+      <div class="container">
+        <div class="math-grid">
+          <div>
+            <p class="eyebrow">Method</p>
+            <h2 class="display-xl">Every input on this page is on this page.</h2>
+            <p class="lede">
+              We do not publish a running total of trees saved, because we cannot measure one. What
+              we can show is the arithmetic, with the assumptions visible, so you can substitute
+              your own and get an answer you trust more than ours.
+            </p>
+            <p class="body tone-secondary math-note">
+              Two hundred cards a professional a year is a common industry rule of thumb, not a
+              figure we measured. Ten cards to a sheet and roughly 8,300 sheets to a tree are
+              standard printing and pulp conversions. If your numbers differ, the shape of the
+              answer does not.
+            </p>
+            <p class="small tone-tertiary">
+              Working from different figures, or want the sources? Write to
+              <a href={`mailto:${CONTACT_EMAIL}`} class="linkish">{CONTACT_EMAIL}</a>.
+            </p>
+          </div>
+
+          <div class="calc surface">
+            <p class="eyebrow">Per 1,000 people, per year</p>
+            <dl class="calc-rows">
+              <div><dt>Paper cards printed per person</dt><dd>200</dd></div>
+              <div><dt>Cards not printed</dt><dd>200,000</dd></div>
+              <div><dt>Sheets of card stock saved</dt><dd>~20,000</dd></div>
+              <div class="calc-total"><dt>Trees not felled</dt><dd>~2.4</dd></div>
+            </dl>
+            <p class="caption tone-tertiary">
+              200,000 ÷ 10 cards a sheet = 20,000 sheets. 20,000 ÷ 8,333 sheets a tree ≈ 2.4.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Commitments ──────────────────────────────────────────────── -->
+    <section class="band band-solid eco-band">
+      <div class="container">
+        <div class="sec-head">
+          <p class="eyebrow">Commitments</p>
+          <h2 class="display-xl">Things you can check by using it.</h2>
+          <p class="lede">
+            No certification logos and no offset partners, because we have neither. These are
+            decisions about how the product is built, and every one of them is visible from inside
+            the app.
+          </p>
+        </div>
+
+        <div class="commit-grid">
+          {commitments.map((c) => (
+            <article class="commit">
+              <h3 class="display-s">{c.head}</h3>
+              <p class="body tone-secondary">{c.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Close ────────────────────────────────────────────────────── -->
+    <section class="band-tight">
+      <div class="container">
+        <div class="close">
+          <h2 class="display-xl">Stop reprinting. Start sharing.</h2>
+          <p class="lede">Free for one card, and that card never needs a print run.</p>
+          <div class="close-ctas">
+            <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-primary btn-lg">Create your card</a>
+            <a href="/contact" class="btn btn-secondary btn-lg">Talk to us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .eco { color: var(--success); }
+  .eyebrow { margin-bottom: var(--space-base); }
+  .open-lede { margin-top: var(--space-lg); font-size: 19px; max-width: 60ch; }
+
+  .sec-head { max-width: 640px; margin-bottom: clamp(32px, 5vw, 56px); }
+  .sec-head .lede { margin-top: var(--space-base); }
+
+  .linkish { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 2px; }
+
+  /* ── Comparison ────────────────────────────────────────────────────── */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-base); }
+  .compare-side {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  /* The replacement is the one marked, and it is marked with the eco colour
+     rather than the action colour, because it is a claim and not a control. */
+  .compare-side.new { border-color: var(--success); }
+  .compare-side.old { background: var(--stock-2); }
+
+  /* ── Lifecycle ─────────────────────────────────────────────────────── */
+  .eco-band { background: var(--stock-2); border-block: 1px solid var(--line); }
+  .life { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-base); }
+  .life li { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card); padding: var(--space-lg); display: flex; flex-direction: column; gap: var(--space-sm); }
+  .life-n { font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 1.4px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+
+  /* ── Arithmetic ────────────────────────────────────────────────────── */
+  .math-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr); gap: clamp(32px, 5vw, 64px); align-items: start; }
+  .math-grid .display-xl { margin-bottom: var(--space-base); }
+  .math-note { margin: var(--space-base) 0; }
+
+  .calc { display: flex; flex-direction: column; gap: var(--space-base); position: sticky; top: 88px; }
+  .calc-rows { margin: 0; display: flex; flex-direction: column; }
+  .calc-rows > div { display: flex; justify-content: space-between; gap: var(--space-md); padding: 11px 0; border-bottom: 1px solid var(--line); }
+  .calc-rows dt { font-size: 14px; color: var(--ink-2); }
+  .calc-rows dd { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .calc-total { border-bottom: 0 !important; }
+  .calc-total dt { color: var(--ink); font-weight: 500; }
+  .calc-total dd { color: var(--success); font-size: 20px; }
+
+  /* ── Commitments ───────────────────────────────────────────────────── */
+  .commit-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden; }
+  .commit { background: var(--card); padding: var(--space-xl); display: flex; flex-direction: column; gap: var(--space-sm); }
+
+  /* ── Close ─────────────────────────────────────────────────────────── */
+  .close { text-align: center; max-width: 640px; margin-inline: auto; }
+  .close .lede { margin: var(--space-base) auto 0; }
+  .close-ctas { display: flex; gap: var(--space-md); flex-wrap: wrap; justify-content: center; margin-top: var(--space-xl); }
+
+  @media (max-width: 980px) {
+    .math-grid { grid-template-columns: minmax(0, 1fr); }
+    .calc { position: static; }
+    .life { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .commit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    .compare, .life, .commit-grid { grid-template-columns: minmax(0, 1fr); }
+    .open-lede { font-size: 17px; }
+  }
+</style>

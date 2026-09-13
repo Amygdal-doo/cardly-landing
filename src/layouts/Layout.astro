@@ -1,0 +1,181 @@
+---
+import '../styles/global.css';
+import { CONTACT_EMAIL, SITE_URL, STORE_LINKS } from '../lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Set on thin or duplicate pages so the crawler leaves them alone. */
+  noindex?: boolean;
+  /**
+   * Share image for this page, as a site-absolute path.
+   *
+   * Defaulted rather than optional-and-omitted. A page with no og:image is
+   * rendered by every chat client as a bare grey rectangle with a URL under
+   * it, which is the one preview guaranteed not to be clicked.
+   */
+  ogImage?: string;
+  /** Extra JSON-LD for pages that describe something more specific than the site. */
+  schema?: Record<string, unknown> | null;
+}
+
+const {
+  title = 'Cardly — the business card that never gets reprinted',
+  description =
+    'Share your card by link, QR or NFC, scan theirs back, and let Cardly keep the contact. No paper, no reprints, no lost cards.',
+  noindex = false,
+  ogImage = '/assets/hero-mockup.png',
+  schema = null,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, SITE_URL).href;
+const ogImageUrl = new URL(ogImage, SITE_URL).href;
+
+/**
+ * Organisation identity, stated once for the whole site.
+ *
+ * Search engines will infer a name and a logo from the page if you do not tell
+ * them, and what they infer is whatever the largest heading happens to say.
+ * This is the difference between a knowledge panel that says "Cardly" and one
+ * that says "the business card that never gets reprinted".
+ */
+const organisationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Cardly',
+  url: SITE_URL,
+  logo: new URL('/assets/logo-mark.png', SITE_URL).href,
+  email: CONTACT_EMAIL,
+  sameAs: [STORE_LINKS.ios, STORE_LINKS.android],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {
+      noindex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        // max-image-preview:large is what allows a real thumbnail beside the
+        // result instead of a favicon-sized one; the snippet limits are lifted
+        // because the copy on these pages is written to be read in full.
+        <meta
+          name="robots"
+          content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+        />
+      )
+    }
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cardly" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={title} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- The browser chrome follows the ground colour in both schemes, so the
+         status bar does not sit as a bright band above a dark page. -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F6F5F0" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0C120E" />
+
+    <!--
+      Fonts load without blocking the first paint.
+
+      A plain <link rel="stylesheet"> to Google Fonts is render-blocking: the
+      browser will not paint until it has been fetched, parsed, and the font
+      files it names have been fetched in turn — two round trips to a third
+      party before anything appears. Loading it as `print` and flipping the
+      media attribute once it arrives moves that off the critical path, which
+      is measured directly by Largest Contentful Paint.
+
+      The <noscript> copy keeps the fonts for crawlers and for anyone with
+      JavaScript off; the body already declares a system-font fallback, so the
+      page is readable in the interval either way.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+      />
+    </noscript>
+
+    <script type="application/ld+json" set:html={JSON.stringify(organisationSchema)} />
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <!--
+      The Cardly mark: two cards, one behind the other, the front one bitten by
+      a "C". This is the one place both accents are allowed to appear together —
+      the card object is exactly what `signal` is rationed for, and the card
+      behind it is the deep forest every control on the site uses.
+    -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <symbol id="cardly-mark" viewBox="0 0 100 100">
+          <g transform="rotate(-14 50 50)">
+            <rect x="18" y="26" width="64" height="40" rx="7" fill="var(--mk-back, #1E5B3F)" />
+            <rect x="26" y="36" width="30" height="4" rx="2" fill="rgba(255,255,255,.55)" />
+            <rect x="26" y="44" width="18" height="3" rx="1.5" fill="rgba(255,255,255,.38)" />
+          </g>
+          <g transform="rotate(10 50 50)">
+            <rect x="22" y="38" width="64" height="40" rx="7" fill="var(--mk-front, #D9603A)" />
+            <path
+              d="M62 48 a10 10 0 1 0 0 20 h-4 a6 6 0 1 1 0 -12 h4 z"
+              fill="var(--mk-cut, #F6F5F0)"
+            />
+          </g>
+        </symbol>
+      </defs>
+    </svg>
+
+    <slot />
+
+    <style is:global>
+      /* The mark inherits the theme so it does not glow on a dark ground. */
+      :root[data-theme='dark'] .cardly-mark,
+      .cardly-mark { --mk-cut: var(--stock); }
+
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        z-index: 100;
+        background: var(--accent);
+        color: var(--on-accent);
+        padding: 12px 18px;
+        border-radius: 0 0 var(--radius-control) 0;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .skip-link:focus { left: 0; }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,146 @@
+---
+/**
+ * Site header, marketing build.
+ *
+ * The header in cardly-landing-astro renders signed-out and then corrects
+ * itself once Supabase reports a session — swapping "Get Cardly" for
+ * "Dashboard". That correction is the only reason the marketing pages ever
+ * loaded an auth client, and it cost every first-time visitor a Supabase
+ * bundle to be told something they already knew.
+ *
+ * Here the header is what it says it is. The sign-in controls are plain links
+ * across to the product, so this file ships no JavaScript beyond the mobile
+ * menu toggle, and the markup a crawler receives is the markup a person sees.
+ *
+ * Same bar, same styles, same shape as the product's header, so crossing over
+ * to app.usecardly.app does not feel like arriving at a different website.
+ */
+import { SIGN_IN_URL } from '../lib/site';
+---
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand">
+      <svg class="cardly-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#cardly-mark" /></svg>
+      <span>Cardly</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Product">
+      <a href="/#features">Features</a>
+      <a href="/#how">How it works</a>
+      <a href="/impact">Impact</a>
+      <a href="/#pricing">Pricing</a>
+    </nav>
+
+    <div class="nav-cta">
+      <a href={SIGN_IN_URL} class="btn btn-ghost btn-sm">Sign in</a>
+      <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-primary btn-sm">Get Cardly</a>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navMobile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="nav-mobile" id="navMobile" hidden>
+    <div class="container nav-mobile-inner">
+      <a href="/#features">Features</a>
+      <a href="/#how">How it works</a>
+      <a href="/impact">Impact</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/contact">Contact</a>
+      <div class="nav-mobile-cta">
+        <a href={SIGN_IN_URL} class="btn btn-secondary btn-block">Sign in</a>
+        <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-primary btn-block">Get Cardly</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: color-mix(in srgb, var(--stock) 88%, transparent);
+    backdrop-filter: saturate(180%) blur(12px);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+    min-height: 64px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-right: auto;
+  }
+  .brand svg { width: 26px; height: 26px; }
+
+  .nav-links {
+    display: flex;
+    gap: var(--space-xl);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-2);
+  }
+  .nav-links a { padding: 4px 0; border-bottom: 2px solid transparent; }
+  .nav-links a:hover { color: var(--ink); }
+  /* The current page is marked by a rule under it, not a colour swap — the
+     accent is reserved for things you can act on. */
+  .nav-links a[aria-current='page'] { color: var(--ink); border-bottom-color: var(--accent); }
+
+  .nav-cta { display: flex; align-items: center; gap: var(--space-sm); margin-left: var(--space-xl); }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--line-2);
+    border-radius: 10px;
+    padding: 7px;
+    cursor: pointer;
+    color: var(--ink);
+  }
+  .nav-toggle svg { width: 20px; height: 20px; }
+
+  .nav-mobile { border-top: 1px solid var(--line); background: var(--stock); }
+  .nav-mobile[hidden] { display: none; }
+  .nav-mobile-inner { display: flex; flex-direction: column; gap: 2px; padding-block: var(--space-md) var(--space-lg); }
+  .nav-mobile-inner > a {
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-mobile-cta { display: flex; flex-direction: column; gap: var(--space-sm); margin-top: var(--space-base); }
+
+  @media (max-width: 900px) {
+    .nav-links, .nav-cta { display: none; }
+    .nav-toggle { display: block; }
+    .brand { margin-right: auto; }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const mobile = document.getElementById('navMobile');
+  toggle?.addEventListener('click', () => {
+    const open = mobile?.hidden;
+    if (mobile) mobile.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(!!open));
+  });
+</script>

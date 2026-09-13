@@ -1,0 +1,8 @@
+# Everything on this host is public marketing and is meant to be indexed.
+# The signed-in product lives on app.usecardly.app and carries its own
+# noindex headers; nothing here links into it except the sign-in CTA.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.usecardly.app/sitemap-index.xml

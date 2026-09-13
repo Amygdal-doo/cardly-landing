@@ -1,0 +1,119 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { CONTACT_EMAIL, DELETE_ACCOUNT_URL } from '../lib/site';
+---
+
+<Layout title="Privacy Policy — Cardly" description="Cardly Privacy Policy. Learn how we collect, use, and protect your data.">
+  <Navbar />
+
+  <main id="main" class="band">
+    <div class="container">
+      <header class="head">
+        <p class="eyebrow">Legal</p>
+        <h1 class="display-hero">Privacy policy</h1>
+        <p class="small tone-tertiary">Last updated: 27 August 2026</p>
+      </header>
+
+      <div class="prose">
+        <section>
+          <h2>1. Information We Collect</h2>
+          <p>When you use Cardly, we collect information you provide directly, such as your name, email address, phone number, job title, company, and any other details you choose to include on your digital business card.</p>
+          <p>We also automatically collect usage data including device information, IP address, browser type, and interaction data (such as card views and taps).</p>
+        </section>
+
+        <section>
+          <h2>2. How We Use Your Information</h2>
+          <ul>
+            <li>To create and display your digital business card</li>
+            <li>To provide analytics about your card's performance</li>
+            <li>To improve and personalize your experience</li>
+            <li>To communicate with you about your account and updates</li>
+            <li>To ensure the security and integrity of our service</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>3. Data Sharing</h2>
+          <p>We do not sell your personal information. We only share your data in the following circumstances:</p>
+          <ul>
+            <li>When you share your card with others. What travels is the card itself: your name,
+                company, job title, work email, phone, website, logo and any social links you added.
+                The email address you sign in with is never part of a shared card, and neither is
+                anything you have not put on one.</li>
+            <li>With service providers who help us operate our platform</li>
+            <li>When required by law or to protect our legal rights</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>4. Data Storage &amp; Security</h2>
+          <p>Your data is stored securely using industry-standard encryption. We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+        </section>
+
+        <section>
+          <h2>5. Your Rights</h2>
+          <p>You have the right to:</p>
+          <ul>
+            <li>Access your personal data</li>
+            <li>Correct inaccurate data</li>
+            <li>Delete your account and associated data</li>
+            <li>Export your data</li>
+            <li>Opt out of marketing communications</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>6. Cookies</h2>
+          <p>We use essential cookies to keep you signed in and remember your preferences. We use analytics cookies to understand how our service is used. You can manage cookie preferences in your browser settings.</p>
+        </section>
+
+        <section>
+          <h2>7. Data Retention</h2>
+          <p>We retain your data for as long as your account is active. If you delete your account, we will remove your personal data within 30 days, except where we are required to retain it for legal purposes.</p>
+        </section>
+
+        <section>
+          <h2>8. Contact Us</h2>
+          <p>Questions about this policy, or about what we hold on you, go to
+            <a href={`mailto:${CONTACT_EMAIL}`} class="link">{CONTACT_EMAIL}</a> — or use
+            <a href="/contact" class="link">the contact page</a>, which writes the same email for you.</p>
+          <p>To delete everything, use <a href={DELETE_ACCOUNT_URL} class="link">delete your account</a>.
+            It removes your profile, cards and contacts, and it is not a request queue — it happens
+            when you confirm it.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .head { max-width: 720px; margin-bottom: clamp(32px, 5vw, 56px); }
+  .head .eyebrow { margin-bottom: var(--space-base); }
+  .head .small { margin-top: var(--space-md); }
+
+  .prose { max-width: 68ch; }
+  .prose section { padding-block: var(--space-xl); border-top: 1px solid var(--line); }
+  .prose section:first-child { border-top: 0; padding-top: 0; }
+  .prose h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+    letter-spacing: -0.4px;
+    margin: 0 0 var(--space-md);
+    color: var(--ink);
+  }
+  .prose p { font-size: 15px; line-height: 24px; color: var(--ink-2); margin: 0 0 var(--space-md); }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose ul { list-style: none; padding: 0; margin: var(--space-md) 0 0; display: flex; flex-direction: column; gap: var(--space-sm); }
+  .prose li { display: flex; align-items: flex-start; gap: 11px; font-size: 15px; line-height: 23px; color: var(--ink-2); }
+  /* The marker is a rule, not a coloured dot. A legal document with an accent
+     bullet on every line spends the accent on nothing. */
+  .prose li::before { content: ''; width: 10px; height: 1px; background: var(--line-2); margin-top: 12px; flex: none; }
+  .link { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
+  .link:hover { color: var(--accent); }
+</style>

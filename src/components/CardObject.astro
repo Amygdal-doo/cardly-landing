@@ -1,0 +1,99 @@
+---
+/**
+ * The card.
+ *
+ * The palette rations its warm accent to two jobs, and this is the first one:
+ * "the one saturated object on screen is the business card itself". Everything
+ * else on a Cardly page is stock, ink and a single blue control colour, which
+ * is what lets this read as an object sitting on the page rather than another
+ * coloured box in a row of them.
+ *
+ * Rendered rather than photographed so it inherits the theme, stays sharp at
+ * any size, and cannot drift from the card the app actually draws.
+ */
+interface Props {
+  name: string;
+  role?: string;
+  company?: string;
+  email?: string;
+  /** `signal` is the shared-card face; `blue` is the owner's own card. */
+  tone?: 'blue' | 'signal';
+  class?: string;
+}
+const { name, role, company, email, tone = 'blue', class: cls } = Astro.props;
+---
+
+<article class:list={['card-object', `tone-${tone}`, cls]} aria-label={`Cardly card for ${name}`}>
+  <div class="co-top">
+    <svg class="co-mark cardly-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#cardly-mark" /></svg>
+    {company && <span class="co-company">{company}</span>}
+  </div>
+  <p class="co-name">{name}</p>
+  {role && <p class="co-role">{role}</p>}
+  {email && <p class="co-contact">{email}</p>}
+</article>
+
+<style>
+  .card-object {
+    --face-a: var(--face-accent-a);
+    --face-b: var(--face-accent-b);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 1.72 / 1;
+    min-height: 190px;
+    /* As a grid or flex item, min-width defaults to min-content — and for a box
+       with an aspect ratio that is min-height × ratio, or 327px. On a 360px
+       screen the card refused to go below that and pushed the page sideways. */
+    min-width: 0;
+    max-width: 100%;
+    padding: var(--space-xl);
+    border-radius: var(--radius-card);
+    background: linear-gradient(148deg, var(--face-a) 0%, var(--face-b) 100%);
+    color: #fff;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+
+  .tone-signal { --face-a: var(--face-signal-a); --face-b: var(--face-signal-b); }
+
+  /* A single sheen across the face. Card stock catches light; a flat rectangle
+     does not read as an object you could pick up. */
+  .card-object::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, rgba(255, 255, 255, 0.14) 0%, transparent 42%);
+    pointer-events: none;
+  }
+
+  .co-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); }
+  /* On a card face the mark is embossed, not reproduced: a second two-colour
+     logo on top of a coloured card is two things competing to be the object. */
+  .co-mark {
+    width: 30px; height: 30px;
+    --mk-back: rgba(255, 255, 255, 0.42);
+    --mk-front: rgba(255, 255, 255, 0.9);
+    --mk-cut: var(--face-a);
+  }
+
+  .co-company {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .co-name {
+    margin: auto 0 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 29px;
+    letter-spacing: -0.5px;
+  }
+  .co-role { margin: 3px 0 0; font-size: 14px; color: rgba(255, 255, 255, 0.8); }
+  .co-contact { margin: var(--space-md) 0 0; font-size: 13px; color: rgba(255, 255, 255, 0.62); }
+</style>
