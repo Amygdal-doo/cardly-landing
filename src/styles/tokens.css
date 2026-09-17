@@ -157,7 +157,7 @@
  * system, and [data-theme] lets an explicit choice win in either direction.
  */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
+  :root:not([data-theme]) {
     --accent: #5FBF8C;
     --accent-2: #86D3A9;
     --accent-ink: #9BDCB8;
@@ -259,4 +259,115 @@
     --band-y-tight: 44px;
     --gutter: 18px;
   }
+}
+
+/* ── Two more grounds ─────────────────────────────────────────────────────
+   midnight — true black rather than near-black. On an OLED screen a black
+   pixel is an unlit pixel, so this is the one theme choice that measurably
+   uses less power; the accent is lifted again because #5FBF8C on pure black
+   reads dimmer than it does on #0C120E.
+
+   paper — warmer and higher contrast than the default light. For bright rooms
+   and for anyone who finds the standard light theme low-contrast.
+
+   Both are derived from the dark block rather than written fresh, so every
+   token the themes define is defined here too. A token left out would fall
+   back to the light value and put light text on a dark ground.
+
+   Measured against their own ground (WCAG AA needs 4.5 for body):
+     midnight  ink 18.78  ink-2 9.33  ink-3 6.40  accent 12.11
+     paper     ink 15.23  ink-2 8.13  ink-3 5.35  accent  8.85
+*/
+:root[data-theme='midnight'] {
+  --accent: #6FD9A0;
+  --accent-2: #93E5BA;
+  --accent-ink: #A9ECC8;
+  --accent-tint: rgba(111, 217, 160, 0.14);
+  --accent-tint-2: rgba(111, 217, 160, 0.22);
+
+  --signal: #EE7A50;
+  --signal-2: #F49C7B;
+  --signal-ink: #F4936F;
+  --signal-tint: rgba(238, 122, 80, 0.16);
+
+  --stock: #000000;
+  --stock-2: #070B08;
+  --stock-3: #0E140F;
+
+  --ink: #EDF4EE;
+  --ink-2: rgba(237, 244, 238, 0.70);
+  --ink-3: rgba(237, 244, 238, 0.52);
+
+  --line: rgba(237, 244, 238, 0.12);
+  --line-2: rgba(237, 244, 238, 0.20);
+
+  --card: #070B08;
+
+  --success: #4ECF8E;
+  --success-ink: #6FDCA5;
+  --success-tint: rgba(78, 207, 142, 0.16);
+
+  --warning: #E89A3C;
+  --error: #F1756B;
+  --error-tint: rgba(241, 117, 107, 0.12);
+
+  --on-accent: #000000;
+
+  /* Lifted just enough to separate from the near-black ground, still
+     saturated. See the note in :root. */
+  --face-accent-a: #235C3E;
+  --face-accent-b: #17492F;
+  --face-signal-a: #C9552F;
+  --face-signal-b: #A03F20;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px -6px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 24px 48px -20px rgba(0, 0, 0, 0.8);
+}
+
+:root[data-theme='paper'] {
+  --accent: #17492F;
+  --accent-2: #1E5B3F;
+  --accent-ink: #123B26;
+  --accent-tint: rgba(23, 73, 47, 0.10);
+  --accent-tint-2: rgba(23, 73, 47, 0.16);
+
+  --signal: #EE7A50;
+  --signal-2: #F49C7B;
+  --signal-ink: #F4936F;
+  --signal-tint: rgba(238, 122, 80, 0.16);
+
+  --stock: #F2EDE0;
+  --stock-2: #E9E3D3;
+  --stock-3: #DED7C4;
+
+  --ink: #101A14;
+  --ink-2: #3A4941;
+  --ink-3: #55645B;
+
+  --line: #DCD5C4;
+  --line-2: #C6BEA9;
+
+  --card: #FBF8F0;
+
+  --success: #4ECF8E;
+  --success-ink: #6FDCA5;
+  --success-tint: rgba(78, 207, 142, 0.16);
+
+  --warning: #E89A3C;
+  --error: #F1756B;
+  --error-tint: rgba(241, 117, 107, 0.12);
+
+  --on-accent: #FBF8F0;
+
+  /* Lifted just enough to separate from the near-black ground, still
+     saturated. See the note in :root. */
+  --face-accent-a: #235C3E;
+  --face-accent-b: #17492F;
+  --face-signal-a: #C9552F;
+  --face-signal-b: #A03F20;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px -6px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 24px 48px -20px rgba(0, 0, 0, 0.8);
 }
