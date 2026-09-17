@@ -54,6 +54,27 @@ const organisationSchema = {
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!--
+      Applied before the first paint, deliberately inline and deliberately
+      blocking. A module script, or anything deferred, runs after the browser
+      has already painted — so somebody who chose dark would watch the page
+      flash white on every navigation. That flash is the whole reason this is
+      not in the component with the rest of the theme code.
+
+      Absence of the key means "follow the system", which is why nothing is
+      written to the attribute in that case: the prefers-color-scheme block in
+      tokens.css is what should answer, and it only gets to if no explicit
+      choice is stamped on the root.
+    -->
+    <script is:inline>
+      try {
+        var t = localStorage.getItem("cardly.theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {
+        /* Storage refused; the system preference still applies. */
+      }
+    </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />

@@ -16,6 +16,7 @@
  * to app.usecardly.app does not feel like arriving at a different website.
  */
 import GetApp from './GetApp.astro';
+import ThemeToggle from './ThemeToggle.astro';
 import { SIGN_IN_URL } from '../lib/site';
 ---
 
@@ -34,6 +35,7 @@ import { SIGN_IN_URL } from '../lib/site';
     </nav>
 
     <div class="nav-cta">
+      <ThemeToggle />
       <a href={SIGN_IN_URL} class="btn btn-ghost btn-sm">Sign in</a>
       <!--
         On a phone this is that phone's store; on a laptop there is no store to
@@ -57,6 +59,7 @@ import { SIGN_IN_URL } from '../lib/site';
       <a href="/#pricing">Pricing</a>
       <a href="/contact">Contact</a>
       <div class="nav-mobile-cta">
+        <div class="nav-mobile-theme"><ThemeToggle /></div>
         <a href={SIGN_IN_URL} class="btn btn-secondary btn-block">Sign in</a>
         <GetApp class="btn btn-primary btn-block" fallbackHref={`${SIGN_IN_URL}?mode=signup`} />
       </div>
@@ -131,6 +134,7 @@ import { SIGN_IN_URL } from '../lib/site';
     color: var(--ink-2);
     border-bottom: 1px solid var(--line);
   }
+  .nav-mobile-theme { display: flex; justify-content: center; margin-bottom: var(--space-sm); }
   .nav-mobile-cta { display: flex; flex-direction: column; gap: var(--space-sm); margin-top: var(--space-base); }
 
   @media (max-width: 900px) {
