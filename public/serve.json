@@ -2,10 +2,85 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/delete-account", "destination": "https://app.usecardly.app/delete-account", "type": 301 },
-    { "source": "/signin", "destination": "https://app.usecardly.app/signin", "type": 301 },
-    { "source": "/app", "destination": "https://app.usecardly.app/app", "type": 301 },
-    { "source": "/dashboard", "destination": "https://app.usecardly.app/app", "type": 301 },
-    { "source": "/settings", "destination": "https://app.usecardly.app/app/settings", "type": 301 }
+    {
+      "source": "/signin",
+      "destination": "https://app.usecardly.app/signin",
+      "type": 301
+    },
+    {
+      "source": "/invite",
+      "destination": "https://app.usecardly.app/invite",
+      "type": 301
+    },
+    {
+      "source": "/auth/callback",
+      "destination": "https://app.usecardly.app/auth/callback",
+      "type": 301
+    },
+    {
+      "source": "/delete-account",
+      "destination": "https://app.usecardly.app/delete-account",
+      "type": 301
+    },
+    {
+      "source": "/app",
+      "destination": "https://app.usecardly.app/",
+      "type": 301
+    },
+    {
+      "source": "/app/card",
+      "destination": "https://app.usecardly.app/card",
+      "type": 301
+    },
+    {
+      "source": "/app/card/:id",
+      "destination": "https://app.usecardly.app/card/:id",
+      "type": 301
+    },
+    {
+      "source": "/app/posts",
+      "destination": "https://app.usecardly.app/posts",
+      "type": 301
+    },
+    {
+      "source": "/app/company",
+      "destination": "https://app.usecardly.app/company",
+      "type": 301
+    },
+    {
+      "source": "/app/settings",
+      "destination": "https://app.usecardly.app/settings",
+      "type": 301
+    },
+    {
+      "source": "/dashboard",
+      "destination": "https://app.usecardly.app/",
+      "type": 301
+    },
+    {
+      "source": "/settings",
+      "destination": "https://app.usecardly.app/settings",
+      "type": 301
+    },
+    {
+      "source": "/c/:id",
+      "destination": "https://app.usecardly.app/c/:id",
+      "type": 301
+    },
+    {
+      "source": "/profile/:id",
+      "destination": "https://app.usecardly.app/profile/:id",
+      "type": 301
+    },
+    {
+      "source": "/post",
+      "destination": "https://app.usecardly.app/post",
+      "type": 301
+    },
+    {
+      "source": "/embed/post-editor",
+      "destination": "https://app.usecardly.app/embed/post-editor",
+      "type": 301
+    }
   ]
 }

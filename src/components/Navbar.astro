@@ -15,6 +15,7 @@
  * Same bar, same styles, same shape as the product's header, so crossing over
  * to app.usecardly.app does not feel like arriving at a different website.
  */
+import GetApp from './GetApp.astro';
 import { SIGN_IN_URL } from '../lib/site';
 ---
 
@@ -34,7 +35,11 @@ import { SIGN_IN_URL } from '../lib/site';
 
     <div class="nav-cta">
       <a href={SIGN_IN_URL} class="btn btn-ghost btn-sm">Sign in</a>
-      <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-primary btn-sm">Get Cardly</a>
+      <!--
+        On a phone this is that phone's store; on a laptop there is no store to
+        send anyone to, so it falls back to the web sign-up. See GetApp.astro.
+      -->
+      <GetApp class="btn btn-primary btn-sm" fallbackHref={`${SIGN_IN_URL}?mode=signup`} />
     </div>
 
     <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navMobile">
@@ -53,7 +58,7 @@ import { SIGN_IN_URL } from '../lib/site';
       <a href="/contact">Contact</a>
       <div class="nav-mobile-cta">
         <a href={SIGN_IN_URL} class="btn btn-secondary btn-block">Sign in</a>
-        <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-primary btn-block">Get Cardly</a>
+        <GetApp class="btn btn-primary btn-block" fallbackHref={`${SIGN_IN_URL}?mode=signup`} />
       </div>
     </div>
   </div>

@@ -3,7 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import CardObject from '../components/CardObject.astro';
-import { APP_URL, SIGN_IN_URL, STORE_LINKS } from '../lib/site';
+import GetApp from '../components/GetApp.astro';
+import { COMPANY_URL, SIGN_IN_URL, STORE_LINKS } from '../lib/site';
 
 /**
  * Steps are numbered because this genuinely is a sequence — you cannot share a
@@ -304,7 +305,7 @@ const included = [
           invite, and nobody is promised a seat that isn't there.
         </p>
         <div class="team-ctas">
-          <a href={`${APP_URL}/app/company`} class="btn btn-primary">Set up your company</a>
+          <a href={COMPANY_URL} class="btn btn-primary">Set up your company</a>
           <a href={SIGN_IN_URL} class="btn btn-ghost">Sign in first</a>
         </div>
       </div>
@@ -324,7 +325,11 @@ const included = [
       <div class="close">
         <h2 class="display-xl">Your next handshake deserves better than paper.</h2>
         <div class="close-ctas">
-          <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-primary btn-lg">Create your card</a>
+          <GetApp
+            class="btn btn-primary btn-lg"
+            fallbackHref={`${SIGN_IN_URL}?mode=signup`}
+            fallbackLabel="Create your card"
+          />
           <a href={STORE_LINKS.ios} class="btn btn-secondary btn-lg">App Store</a>
           <a href={STORE_LINKS.android} class="btn btn-secondary btn-lg">Google Play</a>
         </div>

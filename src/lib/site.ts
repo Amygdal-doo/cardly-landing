@@ -23,7 +23,15 @@ export const SITE_URL = 'https://www.usecardly.app';
 export const APP_URL = 'https://app.usecardly.app';
 
 export const SIGN_IN_URL = `${APP_URL}/signin`;
-export const DASHBOARD_URL = `${APP_URL}/app`;
+/**
+ * The account pages moved to the root of the product host. They were a /app
+ * section of the marketing site until the two were split; every one of those
+ * addresses still resolves, but as a redirect, so linking to the old shape
+ * costs a needless hop.
+ */
+export const DASHBOARD_URL = APP_URL;
+export const SETTINGS_URL = `${APP_URL}/settings`;
+export const COMPANY_URL = `${APP_URL}/company`;
 export const DELETE_ACCOUNT_URL = `${APP_URL}/delete-account`;
 
 /** Deep-link scheme the mobile app registers. See the mobile repo's app.json. */
@@ -32,14 +40,22 @@ export const APP_SCHEME = 'cardly';
 /**
  * Contact address.
  *
- * One real mailbox rather than four aliases on a domain that does not receive
- * mail. This is the Google Workspace account that already sends the product's
- * auth email, so it is known to work.
+ * One mailbox on the product's own domain. It both receives and sends: the
+ * Supabase project authenticates as this address and SPF, DKIM and DMARC are
+ * published for usecardly.app, so mail from it is authenticated rather than
+ * arriving on a domain nothing vouches for.
  */
-export const CONTACT_EMAIL = 'info@amygdal.com';
+export const CONTACT_EMAIL = 'support@usecardly.app';
 
+/**
+ * The store listings.
+ *
+ * iOS is addressed by its App Store id — the `ascAppId` in the mobile repo's
+ * eas.json — not by a slug. `apps.apple.com/app/cardly` was a guess at a slug
+ * Apple never assigned, and it 404s. The id form is the one that always works.
+ */
 export const STORE_LINKS = {
-  ios: 'https://apps.apple.com/app/cardly',
+  ios: 'https://apps.apple.com/app/id6797317769',
   android: 'https://play.google.com/store/apps/details?id=com.amygdal.usecardlyapp',
 } as const;
 

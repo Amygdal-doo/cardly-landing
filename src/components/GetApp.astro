@@ -1,0 +1,57 @@
+---
+import { STORE_LINKS } from '../lib/site';
+
+/**
+ * The "Get Cardly" button.
+ *
+ * On a phone or tablet it goes to that device's store. Everywhere else the
+ * store is useless, so it is swapped for `fallback` — normally the web sign-up
+ * — and the store link never appears at all.
+ *
+ * Both are rendered and one is hidden, rather than rendering one of them,
+ * because these pages are static: the HTML is built once and served to every
+ * device, so the choice can only be made in the browser. Shipping the store
+ * link `hidden` and revealing it costs nothing and cannot flash the wrong
+ * button, which a swap after paint would.
+ *
+ * The rendered href is the iOS one purely so the markup carries a real link if
+ * the script never runs; it is replaced with the right one before the button
+ * is ever shown.
+ */
+interface Props {
+  /** Button classes, shared by both states so the header does not shift. */
+  class?: string;
+  label?: string;
+  /** Where a device with no store goes instead. Omit to show nothing there. */
+  fallbackHref?: string;
+  fallbackLabel?: string;
+}
+
+const {
+  class: className = 'btn btn-primary btn-sm',
+  label = 'Get Cardly',
+  fallbackHref,
+  fallbackLabel = 'Create your card',
+} = Astro.props;
+---
+
+<a href={STORE_LINKS.ios} class={className} data-get-app hidden>{label}</a>
+{fallbackHref && (
+  <a href={fallbackHref} class={className} data-get-app-fallback>{fallbackLabel}</a>
+)}
+
+<script>
+  import { deviceStore } from '../lib/store';
+
+  const store = deviceStore();
+  if (store) {
+    document.querySelectorAll<HTMLAnchorElement>('[data-get-app]').forEach((a) => {
+      a.href = store.href;
+      a.setAttribute('aria-label', store.label);
+      a.hidden = false;
+    });
+    document
+      .querySelectorAll<HTMLElement>('[data-get-app-fallback]')
+      .forEach((el) => (el.hidden = true));
+  }
+</script>

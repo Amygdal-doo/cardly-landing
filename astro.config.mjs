@@ -62,10 +62,28 @@ export default defineConfig({
 
     // Addresses that were live on this domain before the split. Left as
     // redirects so shared links and anything already indexed still land.
-    '/app': 'https://app.usecardly.app/app',
+    //
+    // They point at the *current* shape, not the one that was live when the
+    // split happened: the account pages became the root of the product host,
+    // so '/app/settings' would answer and then immediately redirect again.
+    '/app': 'https://app.usecardly.app/',
     '/signin': 'https://app.usecardly.app/signin',
-    '/dashboard': 'https://app.usecardly.app/app',
-    '/settings': 'https://app.usecardly.app/app/settings',
+    '/invite': 'https://app.usecardly.app/invite',
+    '/auth/callback': 'https://app.usecardly.app/auth/callback',
+    '/dashboard': 'https://app.usecardly.app/',
+    '/settings': 'https://app.usecardly.app/settings',
+
+    // Public pages, and the reason this list is not optional. A card carries
+    // /c/<id>; a wallet pass bakes /profile/<id> into its QR; the mobile post
+    // editor loads /embed/post-editor from this origin. None of those can be
+    // reissued once they are printed, scanned into somebody's phone, or
+    // shipped in an app build — so this domain has to keep answering them
+    // even though the pages themselves live with the product.
+    //
+    // The :id forms are declared in serve.json only; Astro's static redirect
+    // map has no way to carry a parameter through.
+    '/post': 'https://app.usecardly.app/post',
+    '/embed/post-editor': 'https://app.usecardly.app/embed/post-editor',
   },
 
   vite: {
