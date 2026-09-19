@@ -69,7 +69,11 @@ const organisationSchema = {
     <script is:inline>
       try {
         var t = localStorage.getItem("cardly.theme");
-        if (["light","dark","midnight","paper"].indexOf(t) !== -1) document.documentElement.setAttribute("data-theme", t);
+        // This list is a second copy of NAMED in ThemeToggle.astro, and has
+        // to be: it runs inline before first paint, so it cannot import.
+        // A theme missing here still works — it is applied a moment later
+        // by the toggle — but the page paints the wrong one first.
+        if (["light","dark","midnight","dusk","ocean","paper","sand","contrast"].indexOf(t) !== -1) document.documentElement.setAttribute("data-theme", t);
       } catch (e) {
         /* Storage refused; the system preference still applies. */
       }
