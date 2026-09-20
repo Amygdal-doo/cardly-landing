@@ -2,106 +2,258 @@
 /**
  * Theme picker.
  *
- * Five choices, so this is a <select> rather than the row of buttons it used
- * to be — five targets in a header is a lot of chrome, and a native select
- * brings keyboard support, type-ahead and the platform's own menu for free,
- * on a phone as well as a laptop.
+ * A menu we draw, not a native <select>.
  *
- * Light and dark first because they are what people look for. "Match system"
- * sits last: it is the default, so anybody on it has no reason to hunt for it.
+ * The select was replaced for two reasons. It opened wherever the platform
+ * decided — upwards when it judged there was no room below, which in a header
+ * is most of the time — and there is no way to tell it otherwise. And it could
+ * not be styled: the options are drawn by the OS, so eight themes appeared as
+ * a plain system list in the middle of a designed page.
  *
- * The choice is stored as one attribute on <html>. tokens.css does the rest:
- * :root carries light, :root:not([data-theme]) inside the prefers-color-scheme
- * block carries system dark, and each named theme has its own block. The guard
- * is :not([data-theme]) rather than :not([data-theme='light']) precisely so a
- * dark OS cannot override an explicit choice of paper.
+ * What is kept from the native control is the part worth keeping: the roles
+ * and the keyboard. Arrow keys move, Home and End jump, Enter and Space
+ * choose, Escape closes and returns focus to the trigger, Tab closes on the
+ * way out. A menu that only works with a mouse is a downgrade from a select,
+ * however it looks.
+ *
+ * The choice is one attribute on <html>. tokens.css does the rest: :root
+ * carries light, the prefers-color-scheme block carries system dark, and each
+ * named theme has its own block. The guard there is :not([data-theme]) rather
+ * than :not([data-theme='light']) precisely so a dark OS cannot override an
+ * explicit choice of Paper.
  */
+
+const THEMES = [
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
+  { value: 'midnight', label: 'Midnight' },
+  { value: 'dusk', label: 'Dusk' },
+  { value: 'ocean', label: 'Ocean' },
+  { value: 'paper', label: 'Paper' },
+  { value: 'sand', label: 'Sand' },
+  { value: 'contrast', label: 'High contrast' },
+  { value: 'system', label: 'Match system' },
+];
 ---
 
-<label class="theme-picker">
-  <span class="sr-only">Colour theme</span>
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
-    <circle cx="12" cy="12" r="9" />
-    <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" />
-  </svg>
-  <select data-theme-select aria-label="Colour theme">
-    <option value="light">Light</option>
-    <option value="dark">Dark</option>
-    <option value="midnight">Midnight</option>
-    <option value="paper">Paper</option>
-    <option value="system">Match system</option>
-  </select>
-</label>
+<div class="tp" data-theme-picker>
+  <button
+    type="button"
+    class="tp-trigger"
+    data-theme-trigger
+    aria-haspopup="menu"
+    aria-expanded="false"
+    aria-label="Colour theme"
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" />
+    </svg>
+    <span class="tp-name" data-theme-name>Light</span>
+    <svg class="tp-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  </button>
+
+  <div class="tp-menu" data-theme-menu role="menu" aria-label="Colour theme" hidden>
+    {THEMES.map((t) => (
+      <button type="button" class="tp-item" role="menuitemradio" aria-checked="false" data-theme-option={t.value}>
+        <svg class="tp-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m5 13 4 4L19 7" />
+        </svg>
+        <span>{t.label}</span>
+      </button>
+    ))}
+  </div>
+</div>
 
 <style>
-  .theme-picker {
+  .tp { position: relative; display: inline-block; }
+
+  .tp-trigger {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 0 8px 0 10px;
     height: 32px;
+    padding: 0 8px 0 10px;
     border: 1px solid var(--line-2);
     border-radius: var(--radius-pill);
     background: var(--stock-2);
     color: var(--ink-2);
-    cursor: pointer;
-  }
-  .theme-picker:hover { color: var(--ink); }
-  .theme-picker:focus-within { outline: 2px solid var(--accent, var(--blue)); outline-offset: 2px; }
-  .theme-picker svg { width: 15px; height: 15px; flex: none; }
-
-  .theme-picker select {
-    appearance: none;
-    border: 0;
-    background: transparent;
-    color: inherit;
     font-family: var(--font-body);
     font-size: 13px;
     font-weight: 500;
     line-height: 1;
-    padding: 0 2px 0 0;
     cursor: pointer;
   }
-  .theme-picker select:focus { outline: none; }
-  /* The menu itself is drawn by the OS and does not inherit; name the colours
-     so the options are not black-on-black when the page is dark. */
-  .theme-picker option { background: var(--card); color: var(--ink); }
+  .tp-trigger:hover { color: var(--ink); }
+  .tp-trigger:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .tp-trigger svg { width: 15px; height: 15px; flex: none; }
+  .tp-chev { width: 13px; height: 13px; opacity: 0.65; transition: transform 140ms ease; }
+  .tp-trigger[aria-expanded='true'] .tp-chev { transform: rotate(180deg); }
+  .tp-name { white-space: nowrap; }
 
-  .sr-only {
-    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  /*
+    Always below. `top: 100%` and nothing else — no measuring, no flipping.
+    A picker that sometimes opens upward makes people aim twice, and in a
+    header there is always room below because the page is under it.
+  */
+  .tp-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    z-index: 70;
+    min-width: 200px;
+    padding: 4px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md), 0 12px 32px -12px rgb(0 0 0 / 0.28);
   }
+  .tp-menu[hidden] { display: none; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .tp-menu { animation: tp-in 120ms cubic-bezier(0.16, 1, 0.3, 1); transform-origin: top right; }
+    @keyframes tp-in {
+      from { opacity: 0; transform: scale(0.96) translateY(-4px); }
+      to { opacity: 1; transform: none; }
+    }
+  }
+
+  .tp-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 8px;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+  }
+  .tp-item:hover,
+  .tp-item:focus-visible,
+  .tp-item[data-active] { background: var(--stock-2); outline: none; }
+  .tp-check { width: 14px; height: 14px; flex: none; opacity: 0; color: var(--accent); }
+  .tp-item[aria-checked='true'] .tp-check { opacity: 1; }
+  .tp-item[aria-checked='true'] { font-weight: 600; }
 </style>
 
 <script>
   const KEY = 'cardly.theme';
-  const NAMED = ['light', 'dark', 'midnight', 'paper'];
+
+  // Every theme with a block in tokens.css. A name missing from here does not
+  // degrade gracefully — it is treated as "system" the instant it is chosen.
+  const NAMED = ['light', 'dark', 'midnight', 'dusk', 'ocean', 'paper', 'sand', 'contrast'];
 
   function apply(choice: string) {
     const root = document.documentElement;
+    const value = NAMED.includes(choice) ? choice : 'system';
+
     // "system" is the absence of the attribute — that is what hands control
     // back to the prefers-color-scheme block.
-    if (NAMED.includes(choice)) root.setAttribute('data-theme', choice);
-    else root.removeAttribute('data-theme');
+    if (value === 'system') root.removeAttribute('data-theme');
+    else root.setAttribute('data-theme', value);
 
     try {
-      if (NAMED.includes(choice)) localStorage.setItem(KEY, choice);
-      else localStorage.removeItem(KEY);
+      if (value === 'system') localStorage.removeItem(KEY);
+      else localStorage.setItem(KEY, value);
     } catch {
       // Private browsing refuses storage; the choice still applies to this page.
     }
-    document.querySelectorAll<HTMLSelectElement>('[data-theme-select]').forEach((s) => {
-      s.value = NAMED.includes(choice) ? choice : 'system';
+
+    document.querySelectorAll<HTMLElement>('[data-theme-picker]').forEach((picker) => {
+      let label = 'Light';
+      picker.querySelectorAll<HTMLButtonElement>('[data-theme-option]').forEach((item) => {
+        const on = item.dataset.themeOption === value;
+        item.setAttribute('aria-checked', String(on));
+        if (on) label = item.textContent?.trim() || label;
+      });
+      const name = picker.querySelector<HTMLElement>('[data-theme-name]');
+      if (name) name.textContent = label;
     });
   }
+
+  document.querySelectorAll<HTMLElement>('[data-theme-picker]').forEach((picker) => {
+    const trigger = picker.querySelector<HTMLButtonElement>('[data-theme-trigger]')!;
+    const menu = picker.querySelector<HTMLElement>('[data-theme-menu]')!;
+    const items = [...picker.querySelectorAll<HTMLButtonElement>('[data-theme-option]')];
+
+    // Roving highlight. Tracked here rather than by moving DOM focus alone so
+    // the hovered and keyboard-selected item cannot both look current.
+    let at = -1;
+    const mark = (i: number) => {
+      items.forEach((el, n) => el.toggleAttribute('data-active', n === i));
+      at = i;
+      items[i]?.focus();
+    };
+
+    const close = (refocus = true) => {
+      if (menu.hidden) return;
+      menu.hidden = true;
+      trigger.setAttribute('aria-expanded', 'false');
+      items.forEach((el) => el.removeAttribute('data-active'));
+      at = -1;
+      if (refocus) trigger.focus();
+    };
+
+    const open = () => {
+      if (!menu.hidden) return;
+      menu.hidden = false;
+      trigger.setAttribute('aria-expanded', 'true');
+      // Start on the current theme, so the first arrow press moves from where
+      // you already are rather than from the top of a nine-item list.
+      const current = items.findIndex((el) => el.getAttribute('aria-checked') === 'true');
+      mark(current >= 0 ? current : 0);
+    };
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menu.hidden ? open() : close(false);
+    });
+
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        open();
+      }
+    });
+
+    items.forEach((item, i) => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        apply(item.dataset.themeOption!);
+        close();
+      });
+      item.addEventListener('mouseenter', () => mark(i));
+    });
+
+    menu.addEventListener('keydown', (e) => {
+      const last = items.length - 1;
+      switch (e.key) {
+        case 'ArrowDown': e.preventDefault(); mark(at >= last ? 0 : at + 1); break;
+        case 'ArrowUp': e.preventDefault(); mark(at <= 0 ? last : at - 1); break;
+        case 'Home': e.preventDefault(); mark(0); break;
+        case 'End': e.preventDefault(); mark(last); break;
+        case 'Escape': e.preventDefault(); close(); break;
+        // Tab leaves the control entirely, so the menu should not be left
+        // hanging open behind whatever gets focus next.
+        case 'Tab': close(false); break;
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!picker.contains(e.target as Node)) close(false);
+    });
+  });
 
   let stored = 'system';
   try { stored = localStorage.getItem(KEY) || 'system'; } catch { /* default */ }
   apply(stored);
-
-  document.querySelectorAll<HTMLSelectElement>('[data-theme-select]').forEach((s) =>
-    s.addEventListener('change', () => apply(s.value)),
-  );
 
   // Another tab changed it; without this the two disagree until a reload.
   window.addEventListener('storage', (e) => {

@@ -371,3 +371,189 @@
   --shadow-md: 0 4px 16px -6px rgba(0, 0, 0, 0.6);
   --shadow-card: 0 24px 48px -20px rgba(0, 0, 0, 0.8);
 }
+
+/* Four appearances added on the app site first; copied here so a visitor who
+   chose one there is not handed a different site without it. */
+/* Dusk. Dark with a violet cast — the accent shifts to a cool green that
+   reads against purple, because the forest green of the light theme goes
+   muddy on a warm-dark ground. */
+:root[data-theme='dusk'] {
+  --blue: #7FE0B4;
+  --blue-2: #A3EBCA;
+  --blue-ink: #B5F0D6;
+  --blue-tint: rgba(127,224,180,0.14);
+  --blue-tint-2: rgba(127,224,180,0.22);
+
+  --signal: #F0885F;
+  --signal-2: #F5A687;
+  --signal-ink: #F59C7C;
+  --signal-tint: rgba(240,136,95,0.16);
+
+  --stock: #15121C;
+  --stock-2: #1C1826;
+  --stock-3: #251F31;
+
+  --ink: #EDE9F5;
+  --ink-2: rgba(237,233,245,0.70);
+  --ink-3: rgba(237,233,245,0.50);
+
+  --line: rgba(237,233,245,0.13);
+  --line-2: rgba(237,233,245,0.21);
+
+  --card: #1C1826;
+
+  --success: #46C994;
+  --success-tint: rgba(70,201,148,0.16);
+  --warning: #E8A34C;
+  --error: #F3796F;
+  --error-tint: rgba(243,121,111,0.13);
+
+  --on-accent: #15121C;
+
+  --face-blue-a: #3B3A7A;
+  --face-blue-b: #26265A;
+  --face-signal-a: #C55F3A;
+  --face-signal-b: #9C4526;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.42);
+  --shadow-md: 0 4px 16px -6px rgba(0,0,0,0.62);
+  --shadow-card: 0 24px 48px -20px rgba(0,0,0,0.78);
+}
+
+/* Ocean. Dark with a blue cast. The signal orange is warmed slightly: against
+   a cold ground the stock orange reads brown. */
+:root[data-theme='ocean'] {
+  --blue: #5FD8C4;
+  --blue-2: #88E5D5;
+  --blue-ink: #9CEADD;
+  --blue-tint: rgba(95,216,196,0.14);
+  --blue-tint-2: rgba(95,216,196,0.22);
+
+  --signal: #F59264;
+  --signal-2: #F8AE8A;
+  --signal-ink: #F7A37B;
+  --signal-tint: rgba(245,146,100,0.16);
+
+  --stock: #0B1620;
+  --stock-2: #111F2B;
+  --stock-3: #182937;
+
+  --ink: #E6F0F6;
+  --ink-2: rgba(230,240,246,0.70);
+  --ink-3: rgba(230,240,246,0.50);
+
+  --line: rgba(230,240,246,0.13);
+  --line-2: rgba(230,240,246,0.21);
+
+  --card: #111F2B;
+
+  --success: #3FC7A6;
+  --success-tint: rgba(63,199,166,0.16);
+  --warning: #E7A24E;
+  --error: #F17A72;
+  --error-tint: rgba(241,122,114,0.13);
+
+  --on-accent: #0B1620;
+
+  --face-blue-a: #1F5C8F;
+  --face-blue-b: #123C63;
+  --face-signal-a: #C86234;
+  --face-signal-b: #9E4820;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.40);
+  --shadow-md: 0 4px 16px -6px rgba(0,0,0,0.60);
+  --shadow-card: 0 24px 48px -20px rgba(0,0,0,0.76);
+}
+
+/* Sand. Warmer and a shade deeper than Paper, which is near-white; this is a
+   tinted ground, so the ink is browned slightly to sit on it rather than
+   float above it. */
+:root[data-theme='sand'] {
+  --blue: #1B5138;
+  --blue-2: #256B4B;
+  --blue-ink: #17452F;
+  --blue-tint: rgba(27,81,56,0.10);
+  --blue-tint-2: rgba(27,81,56,0.17);
+
+  --signal: #C4552F;
+  --signal-2: #D96B45;
+  --signal-ink: #A8431F;
+  --signal-tint: rgba(196,85,47,0.12);
+
+  --stock: #EFE6D6;
+  --stock-2: #E7DCC8;
+  --stock-3: #DED1B9;
+
+  --ink: #2A2318;
+  --ink-2: rgba(42,35,24,0.72);
+  --ink-3: rgba(42,35,24,0.54);
+
+  --line: rgba(42,35,24,0.14);
+  --line-2: rgba(42,35,24,0.22);
+
+  --card: #F6EFE3;
+
+  --success: #1F7A56;
+  --success-tint: rgba(31,122,86,0.12);
+  --warning: #B87A22;
+  --error: #B23C33;
+  --error-tint: rgba(178,60,51,0.10);
+
+  --on-accent: #F6EFE3;
+
+  --face-blue-a: #1B3B6F;
+  --face-blue-b: #12294F;
+  --face-signal-a: #D9603A;
+  --face-signal-b: #B14524;
+
+  --shadow-sm: 0 1px 2px rgba(60,48,30,0.10);
+  --shadow-md: 0 4px 16px -6px rgba(60,48,30,0.18);
+  --shadow-card: 0 24px 48px -20px rgba(60,48,30,0.30);
+}
+
+/* High contrast. Pure black on pure white, borders at full strength, and no
+   translucent inks — every muted tone here is a solid grey, because opacity
+   over an unknown ground is exactly what fails a contrast check. Accent is
+   darkened until it passes AA against white for normal text. */
+:root[data-theme='contrast'] {
+  --blue: #0B4A2F;
+  --blue-2: #0E5D3B;
+  --blue-ink: #083A24;
+  --blue-tint: rgba(11,74,47,0.12);
+  --blue-tint-2: rgba(11,74,47,0.20);
+
+  --signal: #9E3B16;
+  --signal-2: #B8471D;
+  --signal-ink: #7E2F11;
+  --signal-tint: rgba(158,59,22,0.12);
+
+  --stock: #FFFFFF;
+  --stock-2: #F2F2F2;
+  --stock-3: #E6E6E6;
+
+  --ink: #000000;
+  --ink-2: #2B2B2B;
+  --ink-3: #4A4A4A;
+
+  --line: #767676;
+  --line-2: #000000;
+
+  --card: #FFFFFF;
+
+  --success: #0B6B45;
+  --success-tint: rgba(11,107,69,0.12);
+  --warning: #8A5300;
+  --error: #B3261E;
+  --error-tint: rgba(179,38,30,0.10);
+
+  --on-accent: #FFFFFF;
+
+  --face-blue-a: #12305C;
+  --face-blue-b: #0A1F3D;
+  --face-signal-a: #9E3B16;
+  --face-signal-b: #7E2F11;
+
+  --shadow-sm: 0 0 0 1px #000000;
+  --shadow-md: 0 2px 0 0 #000000;
+  --shadow-card: 0 3px 0 0 #000000;
+}
