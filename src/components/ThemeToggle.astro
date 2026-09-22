@@ -144,7 +144,7 @@ const THEMES = [
 </style>
 
 <script>
-  const KEY = 'cardly.theme';
+  import { PREF_THEME as KEY, DEFAULT_THEME, readPref, writePref, clearPref } from '../lib/prefs';
 
   // Every theme with a block in tokens.css. A name missing from here does not
   // degrade gracefully — it is treated as "system" the instant it is chosen.
@@ -159,12 +159,11 @@ const THEMES = [
     if (value === 'system') root.removeAttribute('data-theme');
     else root.setAttribute('data-theme', value);
 
-    try {
-      if (value === 'system') localStorage.removeItem(KEY);
-      else localStorage.setItem(KEY, value);
-    } catch {
-      // Private browsing refuses storage; the choice still applies to this page.
-    }
+    // Written to localStorage *and* a cookie on .usecardly.app. The product
+    // lives on app.usecardly.app, a different origin, and localStorage does
+    // not cross between origins — so a theme chosen here was invisible there.
+    if (value === DEFAULT_THEME) clearPref(KEY);
+    else writePref(KEY, value);
 
     document.querySelectorAll<HTMLElement>('[data-theme-picker]').forEach((picker) => {
       let label = 'Light';
@@ -251,12 +250,13 @@ const THEMES = [
     });
   });
 
-  let stored = 'system';
-  try { stored = localStorage.getItem(KEY) || 'system'; } catch { /* default */ }
+  // Falls back to the shared cookie, so arriving from the product adopts the
+  // theme already chosen there rather than starting over.
+  const stored = readPref(KEY) || DEFAULT_THEME;
   apply(stored);
 
   // Another tab changed it; without this the two disagree until a reload.
   window.addEventListener('storage', (e) => {
-    if (e.key === KEY) apply(e.newValue || 'system');
+    if (e.key === KEY) apply(e.newValue || DEFAULT_THEME);
   });
 </script>

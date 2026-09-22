@@ -68,7 +68,21 @@ const organisationSchema = {
     -->
     <script is:inline>
       try {
-        var t = localStorage.getItem("cardly.theme");
+        var t = null;
+        try { t = localStorage.getItem("cardly.theme"); } catch (e) { /* private mode */ }
+
+        // Then the cookie on .usecardly.app, which is the only one of the two
+        // that crosses to app.usecardly.app — localStorage is per-origin, so
+        // somebody arriving from the product has nothing stored here yet and
+        // would paint the default before the toggle corrects it.
+        //
+        // Inlined rather than imported, like the list below: this runs before
+        // first paint and a module would be too late to prevent the flash.
+        if (!t && document.cookie) {
+          var m = document.cookie.match(/(?:^|; )cardly\.theme=([^;]*)/);
+          if (m) { try { t = decodeURIComponent(m[1]); } catch (e) { t = m[1]; } }
+        }
+
         // This list is a second copy of NAMED in ThemeToggle.astro, and has
         // to be: it runs inline before first paint, so it cannot import.
         // A theme missing here still works — it is applied a moment later
