@@ -4,143 +4,204 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import CardObject from '../components/CardObject.astro';
 import GetApp from '../components/GetApp.astro';
-import { COMPANY_URL, SIGN_IN_URL, STORE_LINKS } from '../lib/site';
+import { COMPANY_URL, SIGN_IN_URL, SITE_URL, STORE_LINKS } from '../lib/site';
 
 /**
- * Steps are numbered because this genuinely is a sequence — you cannot share a
- * card you have not made. Numbering anything else on this page would be
- * decoration.
+ * The home page.
+ *
+ * One argument, made in order: a handshake should not cost a tree. Then what
+ * replaces the paper — the card, how it travels, how you remember the person
+ * afterwards, the page it opens — and only then the price. Every feature named
+ * here is one the app ships; nothing is a roadmap item.
  */
-const steps = [
-  {
-    title: 'Make your card',
-    body:
-      'Name, role, company, the ways you want to be reached. Pick a colour. It takes about a minute, and you only do it once.',
-  },
-  {
-    title: 'Hand it over',
-    body:
-      'A link, a QR code, or an NFC tap. It opens in whatever browser they already have — they do not need Cardly, an account, or anything installed.',
-  },
-  {
-    title: 'Keep the contact',
-    body:
-      'Scan their card back and Cardly reads it, tidies it and files it with a note about where you met. Change jobs and every card you have ever shared updates itself.',
-  },
-];
+
+const TITLE = 'Cardly — the digital business card. A handshake shouldn’t cost a tree.';
+const DESCRIPTION =
+  'Cardly is the eco-friendly digital business card: share by QR, link, NFC or Apple & Google Wallet, scan paper cards with AI, keep notes and follow-up reminders, and replace your Linktree with one public page.';
+
+/** Sharing is listed by channel because that is how people ask: "can I…?" */
+const shareWays = ['QR code', 'Link', 'NFC tap', 'Apple Wallet', 'Google Wallet'];
 
 const features = [
   {
-    title: 'Share without asking anything of them',
+    tab: 'Share',
+    title: 'One card, every way to hand it over',
     body:
-      'Link, QR or NFC tap. It opens in any browser and works whether or not they have ever heard of Cardly.',
+      'A QR on your screen, a link in a message, a tap of the phone, or a pass in Apple and Google Wallet. It opens in any browser — they don’t need Cardly to read it.',
+    wide: true,
   },
   {
-    title: 'Scan theirs back',
+    tab: 'Scan',
+    title: 'Photograph a paper card. AI does the typing.',
     body:
-      'Point the camera at a QR, a paper card or an email signature. Cardly reads it, cleans it up and files it.',
+      'Point the camera at a printed card and Cardly reads the name, title, company, email and phone for you. Scan someone’s Cardly QR and their card is saved whole.',
   },
   {
-    title: 'Contacts that stay findable',
+    tab: 'Remember',
+    title: 'Reminders that bring the follow-up back',
     body:
-      'Notes, tags and follow-up reminders on every card. Search by company, by role, or by the conference you were at.',
+      'Follow up with John on Friday, at the coffee shop, #client, urgent. Every reminder is tied to the person, so nobody you meet goes cold.',
   },
   {
-    title: 'One tap from the home screen',
+    tab: 'Notes',
+    title: 'Notes on the people you meet',
     body:
-      'A widget that puts your QR code one tap away, for the moment somebody asks and you have a drink in your other hand.',
+      'Where you met, what you talked about, what to send. Folders and #tags keep a conference’s worth of contacts findable months later.',
+  },
+  {
+    tab: 'Design',
+    title: 'Your colours, your finish, your logo',
+    body:
+      'Pick colours, patterns and finishes, place your logo and choose a layout. As many cards as you wear hats — personal, company, side project.',
+  },
+  {
+    tab: 'Teams',
+    title: 'A company look on every card',
+    body:
+      'Create your company, invite people by email, and everyone gets a card in your brand. One bill that follows your headcount.',
+    full: true,
   },
 ];
 
-const included = [
-  'QR sharing and scanning',
-  'Contact management with notes and tags',
-  'Follow-up reminders',
-  'Works offline',
-  'Light and dark, following your phone',
-  'Export your data whenever you want',
+/** The public page, in the order a visitor scrolls it. */
+const pageParts = [
+  ['Profile photo & banner', 'Your face and your colours, the moment the link opens.'],
+  ['One button that matters', '“Book a call”, “See the menu”, “Download the deck” — next to your photo.'],
+  ['Posts', 'Links, notes and videos under your card. Pin the three that matter.'],
+  ['Carousel', 'Up to five pictures that each say something and go somewhere.'],
+  ['All your links', 'LinkedIn, Instagram, GitHub, YouTube and twelve more, as icons.'],
 ];
+
+const steps = [
+  {
+    title: 'Make your card',
+    body: 'Name, role, company, the ways to reach you. Choose a colour and a finish. About a minute, once.',
+  },
+  {
+    title: 'Hand it over',
+    body: 'QR, link, NFC or Wallet. It opens in whatever browser they have — no app, no account.',
+  },
+  {
+    title: 'Follow up',
+    body: 'Scan their card back, add a note and a reminder. Change jobs and every card you shared updates itself.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Do the people I meet need the Cardly app?',
+    a: 'No. Your card opens in any phone’s browser from a QR code, a link or an NFC tap. They can save you to their contacts with one tap, or keep the whole card in Cardly if they have it.',
+  },
+  {
+    q: 'Can Cardly replace my Linktree?',
+    a: 'Yes. Every card has its own public page with your photo, banner, a call-to-action button, your social links, posts and an image carousel — one link for your bio, your email signature and your QR code.',
+  },
+  {
+    q: 'Can I scan paper business cards?',
+    a: 'Yes. Photograph a printed card and Cardly reads the name, title, company, email and phone for you, then saves them as a contact you can add notes and reminders to.',
+  },
+  {
+    q: 'Does it work with Apple Wallet and Google Wallet?',
+    a: 'Yes. Add your card to Apple Wallet or Google Wallet and show its QR code from the lock screen, even without opening the app.',
+  },
+  {
+    q: 'How is a digital business card better for the planet?',
+    a: 'Around ten billion paper business cards are printed every year and most are thrown away within a week. A Cardly card is never printed, never reprinted when your title changes, and never thrown away.',
+  },
+  {
+    q: 'How much does Cardly cost?',
+    a: 'One card is free forever, with sharing, scanning, notes and reminders. Pro is $6.99 a month or $59.99 a year for unlimited cards, your logo, finishes, posts and the full public page.',
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Cardly',
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'iOS, Android, Web',
+      url: SITE_URL,
+      description: DESCRIPTION,
+      offers: [
+        { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'USD' },
+        { '@type': 'Offer', name: 'Pro monthly', price: '6.99', priceCurrency: 'USD' },
+        { '@type': 'Offer', name: 'Pro yearly', price: '59.99', priceCurrency: 'USD' },
+      ],
+      featureList: [
+        'Digital business card with QR code, link and NFC sharing',
+        'Apple Wallet and Google Wallet passes',
+        'AI business card scanner',
+        'Contact notes and follow-up reminders',
+        'Custom colours, patterns and logo',
+        'Public profile page with posts, carousel, banner and call-to-action button',
+        'Company cards for teams',
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ],
+};
 ---
 
-<Layout>
+<Layout title={TITLE} description={DESCRIPTION} ogImage="/assets/app-home.jpg" schema={schema}>
   <Navbar />
 
   <!-- ── Hero ─────────────────────────────────────────────────────────── -->
   <header class="hero">
+    <div class="glow" aria-hidden="true"></div>
     <div class="container hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">For people who meet people</p>
-        <h1 class="display-hero">
-          The business card<br />you never reprint.
-        </h1>
+        <p class="chip chip-eco hero-chip">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17 8C8 10 5.9 16.2 3.8 21.4l1.9.7.9-2.3c.5.2 1 .2 1.4.2C19 20 22 3 22 3c-1 2-8 2.3-13 3.2-5 1-7 5.3-7 9.3 0 1.4.5 2.8.9 3.6C3.8 17.4 7 9 17 8z"/></svg>
+          The paperless business card
+        </p>
+        <h1 class="display-hero">A handshake shouldn’t cost&nbsp;a&nbsp;tree.</h1>
         <p class="lede">
-          Change your job title and every card you have ever handed out changes with it. Share by
-          link, QR or NFC — they need nothing installed to open it.
+          Cardly is your business card, your link-in-bio and your follow-up list in one app. Share it
+          by QR, link, NFC or Wallet, scan theirs back, and never print again.
         </p>
 
         <div class="hero-ctas">
           <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-primary btn-lg">
-            Create your card
+            Create your free card
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6" />
             </svg>
           </a>
-          <a href="#how" class="btn btn-secondary btn-lg">See how it works</a>
+          <GetApp class="btn btn-secondary btn-lg" fallbackHref="#features" fallbackLabel="See what it does" />
         </div>
-
-        <p class="small tone-tertiary hero-meta">
-          Free for one card. No card details to start.
-        </p>
+        <p class="small tone-tertiary hero-meta">Free for one card · iPhone, Android and the web</p>
       </div>
 
-      <!--
-        The signature: the card itself, the one saturated object on the page.
-        Two of them, offset, because the whole product is the exchange — yours
-        going out, theirs coming back.
-      -->
-      <div class="hero-cards">
-        <CardObject
-          class="card-back"
-          tone="signal"
-          name="Mara Ilić"
-          role="Head of Partnerships"
-          company="Northwind"
-          email="mara@northwind.co"
-        />
-        <!--
-          The front card rewrites its own role line.
-
-          The headline claims that changing your job title changes every card
-          you have handed out. A still picture of a card cannot make that
-          claim; it can only sit next to it. So the card demonstrates it — the
-          role is replaced in place, the card is never swapped, and the caption
-          says what just happened. It is the one piece of motion on the page,
-          and it is the product's whole argument.
-        -->
-        <CardObject
-          class="card-front"
-          name="Your name"
-          role="What you do"
-          company="Your company"
-          email="you@company.com"
-        />
-        <p class="hero-live" aria-hidden="true">
-          <span class="hero-live-dot"></span>Updated. Every card already handed out says this.
-        </p>
+      <!-- The app itself, with the two things it does after the handshake. -->
+      <div class="hero-visual">
+        <figure class="phone phone-hero">
+          <img src="/assets/app-home.jpg" width="640" height="1389"
+               alt="Cardly home screen with a business card, its QR code and a follow-up reminder" fetchpriority="high" />
+        </figure>
+        <div class="float float-a" aria-hidden="true">
+          <span class="float-dot dot-eco"></span>Added to Apple Wallet
+        </div>
+        <div class="float float-b" aria-hidden="true">
+          <span class="float-dot dot-signal"></span>Follow up with John Doe · Fri
+        </div>
       </div>
     </div>
 
-    <!--
-      A rule of facts, not a row of invented metrics. Every line here is either
-      arithmetic the reader can check or something the product does; nothing is
-      a number chosen because it looked impressive.
-    -->
     <div class="container">
       <ul class="facts-rule">
         <li><span class="f-k">10 billion</span><span class="f-v">paper cards printed a year</span></li>
         <li><span class="f-k">88%</span><span class="f-v">binned inside a week</span></li>
         <li><span class="f-k">0</span><span class="f-v">apps they need to install</span></li>
-        <li><span class="f-k">1</span><span class="f-v">card, kept current everywhere</span></li>
+        <li><span class="f-k">0</span><span class="f-v">trees for your next handshake</span></li>
       </ul>
     </div>
   </header>
@@ -149,21 +210,89 @@ const included = [
   <section class="band" id="features">
     <div class="container">
       <div class="sec-head">
-        <p class="eyebrow">What's inside</p>
-        <h2 class="display-xl">Built for the handshake, not the drawer.</h2>
+        <p class="eyebrow">Everything after hello</p>
+        <h2 class="display-xl">Meet someone. Share in a second. Never lose them.</h2>
         <p class="lede">
-          Paper cards go missing. Cardly keeps every introduction searchable, editable and in your
-          pocket.
+          Paper cards end up in a drawer. Cardly keeps every introduction alive — shared, saved,
+          noted and followed up.
         </p>
       </div>
 
-      <div class="feature-grid">
+      <div class="bento">
         {features.map((f) => (
-          <article class="feature">
-            <h3 class="display-s">{f.title}</h3>
+          <article class:list={['tile', { 'tile-wide': f.wide, 'tile-full': f.full }]}>
+            <span class="tile-tab">{f.tab}</span>
+            <h3 class="display-m">{f.title}</h3>
             <p class="body tone-secondary">{f.body}</p>
+            {f.wide && (
+              <ul class="ways">
+                {shareWays.map((w) => <li class="chip">{w}</li>)}
+              </ul>
+            )}
           </article>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── After the meeting: notes and reminders ───────────────────────── -->
+  <section class="band band-solid show-band">
+    <div class="container show-grid">
+      <div class="show-copy">
+        <p class="eyebrow">After the handshake</p>
+        <h2 class="display-xl">The follow-up is where deals happen.</h2>
+        <p class="lede">
+          A note on who they are and where you met. A reminder with a date, a place and a tag. Cardly
+          brings it back when it matters — not when you happen to find the card again.
+        </p>
+        <ul class="ticks">
+          <li>Reminders by today, upcoming and done, with urgent ones flagged</li>
+          <li>Notes in folders, searchable by #tag, company or event</li>
+          <li>Every note and reminder attached to the person it’s about</li>
+        </ul>
+      </div>
+      <div class="show-phones">
+        <figure class="phone phone-tilt-l">
+          <img src="/assets/app-notes.jpg" width="640" height="1389" loading="lazy"
+               alt="Cardly notes: a folder for John Doe and a note about meeting him at Web Summit" />
+        </figure>
+        <figure class="phone phone-tilt-r">
+          <img src="/assets/app-reminders.jpg" width="640" height="1389" loading="lazy"
+               alt="Cardly reminders: an urgent follow-up with John Doe at a coffee shop, tagged #client" />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Your page, not a Linktree ────────────────────────────────────── -->
+  <section class="band" id="page">
+    <div class="container page-grid">
+      <!-- The public page, drawn rather than screenshotted so it follows the theme. -->
+      <div class="pagemock" aria-hidden="true">
+        <div class="pm-banner"></div>
+        <div class="pm-row">
+          <span class="pm-avatar">AK</span>
+          <span class="pm-cta">Book a call</span>
+        </div>
+        <CardObject name="Amira Kovač" role="Founder" company="Studio North" email="amira@studionorth.co" />
+        <div class="pm-socials"><i></i><i></i><i></i><i></i></div>
+        <div class="pm-post"><b></b><span><em></em><em></em></span></div>
+        <div class="pm-post"><b></b><span><em></em><em></em></span></div>
+        <div class="pm-carousel"><i class="on"></i><i></i><i></i></div>
+      </div>
+
+      <div>
+        <p class="eyebrow">One link for everything</p>
+        <h2 class="display-xl">Your card is also your page. Drop the Linktree.</h2>
+        <p class="lede">
+          Every card opens a page that’s yours — for your bio, your email signature and your QR
+          code. It shows who you are and what to do next.
+        </p>
+        <dl class="parts">
+          {pageParts.map(([k, v]) => (
+            <div><dt>{k}</dt><dd>{v}</dd></div>
+          ))}
+        </dl>
       </div>
     </div>
   </section>
@@ -173,66 +302,47 @@ const included = [
     <div class="container">
       <div class="sec-head">
         <p class="eyebrow">How it works</p>
-        <h2 class="display-xl">Three things, then you stop thinking about it.</h2>
+        <h2 class="display-xl">Three steps, then you stop thinking about it.</h2>
       </div>
-
       <ol class="steps">
         {steps.map((s, i) => (
           <li class="step">
             <span class="step-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-            <div>
-              <h3 class="display-m">{s.title}</h3>
-              <p class="body tone-secondary">{s.body}</p>
-            </div>
+            <h3 class="display-m">{s.title}</h3>
+            <p class="body tone-secondary">{s.body}</p>
           </li>
         ))}
       </ol>
-
-      <figure class="shot">
-        <img src="/assets/hero-mockup.png" alt="The Cardly app showing a card ready to share" loading="lazy" />
-        <figcaption class="caption tone-tertiary">
-          Your card, the QR to hand over, and everyone you have met — in one place.
-        </figcaption>
-      </figure>
     </div>
   </section>
 
   <!-- ── Impact ───────────────────────────────────────────────────────── -->
   <section class="band band-solid eco-band" id="impact">
-    <div class="container">
-      <div class="eco-grid">
-        <div>
-          <p class="eyebrow eco-eyebrow">Impact</p>
-          <h2 class="display-xl">A handshake shouldn't cost a tree.</h2>
-          <p class="lede">
-            Ten billion paper business cards are printed every year and most are thrown away inside
-            a week. Every card Cardly replaces is one that was never printed — that is the entire
-            claim, and it is the only one we make.
-          </p>
-
-          <div class="eco-ctas">
-            <a href="/impact" class="btn btn-primary">See the arithmetic</a>
-            <a href="#pricing" class="btn btn-ghost">Plans</a>
-          </div>
+    <div class="container eco-grid">
+      <div>
+        <p class="eyebrow eco-eyebrow">Why we built it</p>
+        <h2 class="display-xl">New connections don’t need new paper.</h2>
+        <p class="lede">
+          Ten billion paper business cards are printed every year, and most are thrown away within a
+          week. Every card Cardly replaces is one that is never printed, never reprinted when your
+          title changes, and never thrown away. Good for business, better for the world.
+        </p>
+        <div class="eco-ctas">
+          <a href="/impact" class="btn btn-primary">See the arithmetic</a>
+          <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-ghost">Go paperless</a>
         </div>
-
-        <!--
-          A calculator, not a scoreboard. The inputs are visible, so a reader
-          who disagrees with 200 cards a year can substitute their own number
-          and still trust the result.
-        -->
-        <div class="calc surface">
-          <p class="eyebrow">Per 1,000 people, per year</p>
-          <dl class="calc-rows">
-            <div><dt>Paper cards printed per person</dt><dd>200</dd></div>
-            <div><dt>Cards not printed</dt><dd>200,000</dd></div>
-            <div><dt>Sheets of card stock saved</dt><dd>~20,000</dd></div>
-            <div class="calc-total"><dt>Trees not felled</dt><dd>~2.4</dd></div>
-          </dl>
-          <p class="caption tone-tertiary">
-            Ten cards to a sheet, 8,333 sheets to a tree. Round numbers, shown so you can check them.
-          </p>
-        </div>
+      </div>
+      <div class="calc surface">
+        <p class="eyebrow">Per 1,000 people, per year</p>
+        <dl class="calc-rows">
+          <div><dt>Paper cards printed per person</dt><dd>200</dd></div>
+          <div><dt>Cards not printed</dt><dd>200,000</dd></div>
+          <div><dt>Sheets of card stock saved</dt><dd>~20,000</dd></div>
+          <div class="calc-total"><dt>Trees not felled</dt><dd>~2.4</dd></div>
+        </dl>
+        <p class="caption tone-tertiary">
+          Ten cards to a sheet, 8,333 sheets to a tree. Round numbers, shown so you can check them.
+        </p>
       </div>
     </div>
   </section>
@@ -242,53 +352,43 @@ const included = [
     <div class="container">
       <div class="sec-head">
         <p class="eyebrow">Pricing</p>
-        <h2 class="display-xl">Free for one card. Pay when you need more.</h2>
+        <h2 class="display-xl">Free for one card. Pro when you want the whole page.</h2>
       </div>
 
       <div class="plans">
         <article class="plan">
           <h3 class="display-s">Free</h3>
           <p class="price">$0<span>forever</span></p>
-          <p class="body tone-secondary">One card, yours to share anywhere.</p>
           <ul class="plan-list">
-            <li>1 card</li>
-            <li>QR sharing and scanning</li>
-            <li>All the core features</li>
+            <li>One card, shared by QR, link and NFC</li>
+            <li>Scan and save other people’s cards</li>
+            <li>Notes and follow-up reminders</li>
           </ul>
-          <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-secondary btn-block">Get the app</a>
+          <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-secondary btn-block">Create your card</a>
         </article>
 
         <article class="plan">
-          <h3 class="display-s">Monthly</h3>
-          <p class="price">$5<span>a month</span></p>
-          <p class="body tone-secondary">For anyone carrying more than one hat.</p>
+          <h3 class="display-s">Pro monthly</h3>
+          <p class="price">$6.99<span>a month</span></p>
           <ul class="plan-list">
             <li>Unlimited cards</li>
-            <li>Colours, themes and your logo</li>
-            <li>Priority support</li>
+            <li>Your logo, finishes and patterns</li>
+            <li>Posts, carousel, banner and your button</li>
           </ul>
           <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-secondary btn-block">Start monthly</a>
         </article>
 
         <article class="plan plan-featured">
-          <span class="chip chip-signal plan-flag">Two months free</span>
-          <h3 class="display-s">Yearly</h3>
-          <p class="price">$50<span>a year</span></p>
-          <p class="body tone-secondary">Everything in Monthly, twelve months for the price of ten — $4.17 a month.</p>
+          <span class="chip plan-flag">Save 28%</span>
+          <h3 class="display-s">Pro yearly</h3>
+          <p class="price">$59.99<span>a year — about $5 a month</span></p>
           <ul class="plan-list">
-            <li>Everything in Monthly</li>
-            <li>Unlimited cards</li>
+            <li>Everything in Pro monthly</li>
             <li>Priority support</li>
+            <li>Cancel any time</li>
           </ul>
           <a href={`${SIGN_IN_URL}?mode=signup`} class="btn btn-primary btn-block">Go yearly</a>
         </article>
-      </div>
-
-      <div class="included">
-        <p class="eyebrow">In every plan, including the free one</p>
-        <ul class="included-list">
-          {included.map((i) => <li>{i}</li>)}
-        </ul>
       </div>
     </div>
   </section>
@@ -297,25 +397,41 @@ const included = [
   <section class="band band-solid team-band">
     <div class="container team-grid">
       <div>
-        <p class="eyebrow">Team accounts</p>
+        <p class="eyebrow">For companies</p>
         <h2 class="display-xl">One company pays. Everyone gets Pro.</h2>
         <p class="lede">
-          Create your company, connect a card, and invite people by email — all on the web. Their
-          Pro plan is covered the moment they accept. You are charged for the people you invite and
-          nothing else: your own place comes with the company, so a company of one costs nothing.
+          Create your company, set its look once, and invite people by email. They get a card in your
+          brand the moment they accept. You pay per person you invite — your own place is free.
         </p>
         <div class="team-ctas">
           <a href={COMPANY_URL} class="btn btn-primary">Set up your company</a>
-          <a href={SIGN_IN_URL} class="btn btn-ghost">Sign in first</a>
+          <a href={SIGN_IN_URL} class="btn btn-ghost">Sign in</a>
         </div>
       </div>
-
       <ul class="team-facts">
-        <li><strong>Invite by email.</strong> They get a link; opening it puts them on the team.</li>
-        <li><strong>Two roles, and a job title.</strong> Admins invite and manage, members just get their card — and everyone can say what they actually do.</li>
-        <li><strong>Your logo on their cards.</strong> Opt-in, so nobody's design changes without them.</li>
-        <li><strong>Nothing to buy in advance.</strong> The bill follows your team: invite somebody and it goes up, remove them and it goes down.</li>
+        <li><strong>Your brand on every card.</strong> Logo, colours and finish, set once.</li>
+        <li><strong>Invite by email.</strong> Opening the link puts them on the team.</li>
+        <li><strong>Roles and job titles.</strong> Admins manage, members just get their card.</li>
+        <li><strong>A bill that follows the team.</strong> Add someone, it goes up; remove them, it goes down.</li>
       </ul>
+    </div>
+  </section>
+
+  <!-- ── FAQ ──────────────────────────────────────────────────────────── -->
+  <section class="band" id="faq">
+    <div class="container faq-wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Questions</p>
+        <h2 class="display-xl">Digital business cards, answered.</h2>
+      </div>
+      <div class="faq">
+        {faqs.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p class="body tone-secondary">{f.a}</p>
+          </details>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -323,13 +439,10 @@ const included = [
   <section class="band-tight">
     <div class="container">
       <div class="close">
+        <p class="chip chip-eco">Paperless since your first hello</p>
         <h2 class="display-xl">Your next handshake deserves better than paper.</h2>
         <div class="close-ctas">
-          <GetApp
-            class="btn btn-primary btn-lg"
-            fallbackHref={`${SIGN_IN_URL}?mode=signup`}
-            fallbackLabel="Create your card"
-          />
+          <GetApp class="btn btn-primary btn-lg" fallbackHref={`${SIGN_IN_URL}?mode=signup`} fallbackLabel="Create your card" />
           <a href={STORE_LINKS.ios} class="btn btn-secondary btn-lg">App Store</a>
           <a href={STORE_LINKS.android} class="btn btn-secondary btn-lg">Google Play</a>
         </div>
@@ -342,121 +455,159 @@ const included = [
 
 <style>
   /* ── Hero ──────────────────────────────────────────────────────────── */
-  .hero { padding-top: clamp(48px, 8vh, 96px); }
-  .hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    gap: clamp(32px, 6vw, 80px);
-    align-items: center;
+  .hero { position: relative; padding-top: clamp(40px, 7vh, 88px); overflow: hidden; }
+  /* A soft field of the app's two colours behind the phone: the green of the
+     product and the orange of the card mark. */
+  .glow {
+    position: absolute; inset: -20% -10% auto auto; width: 70%; height: 90%; pointer-events: none;
+    background:
+      radial-gradient(40% 40% at 60% 40%, var(--accent-tint-2), transparent 70%),
+      radial-gradient(30% 30% at 80% 70%, var(--signal-tint), transparent 70%);
+    filter: blur(10px);
   }
-  .hero-copy .eyebrow { margin-bottom: var(--space-lg); }
+  .hero-grid {
+    position: relative;
+    display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(32px, 6vw, 80px); align-items: center;
+  }
+  .hero-chip { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 var(--space-lg); }
+  .hero-chip svg { width: 14px; height: 14px; }
   .hero-copy .display-hero { margin-bottom: var(--space-lg); }
   .hero-ctas { display: flex; gap: var(--space-md); flex-wrap: wrap; margin-top: var(--space-xl); }
   .hero-meta { margin-top: var(--space-base); }
 
-  .hero-cards { position: relative; min-width: 0; padding: 6% 4% 12%; }
-  /* The live-role caption sits under the cards, tied to them by the dot rather
-     than by a heading — it is a status line, not a feature claim. */
-  .hero-live {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: var(--space-base) 0 0;
-    font-family: var(--font-body);
-    font-size: 12px;
-    letter-spacing: 0.02em;
-    color: var(--ink-3);
-    opacity: 0;
-    transition: opacity .4s ease;
+  /* ── Phones ────────────────────────────────────────────────────────── */
+  /* The screenshots carry the phone's clock and battery along the top; the
+     frame starts just below them so the app is the first thing seen. */
+  .phone {
+    margin: 0; position: relative; aspect-ratio: 640 / 1250; overflow: hidden;
+    border-radius: 34px; border: 8px solid #0B0F14; background: #0B0F14;
+    box-shadow: var(--shadow-card), 0 0 0 1px var(--line-2);
   }
-  .hero-live.is-on { opacity: 1; }
-  .hero-live-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--signal);
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--signal) 60%, transparent);
-    animation: hero-pulse 2s ease-out infinite;
-  }
-  @keyframes hero-pulse {
-    0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--signal) 55%, transparent); }
-    70%  { box-shadow: 0 0 0 7px transparent; }
-    100% { box-shadow: 0 0 0 0 transparent; }
-  }
-  /* The role swaps rather than fades through nothing, so the card never looks
-     blank mid-change. */
-  .hero-cards :global(.card-front .co-role) { transition: opacity .28s ease; }
-  .hero-cards :global(.card-front.is-swapping .co-role) { opacity: 0; }
+  .phone img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: bottom; }
+  .hero-visual { position: relative; display: grid; place-items: center; padding: 4% 0 8%; }
+  .phone-hero { width: min(300px, 78%); transform: rotate(2deg); }
 
-  @media (prefers-reduced-motion: reduce) {
-    .hero-live-dot { animation: none; }
-    .hero-cards :global(.card-front .co-role) { transition: none; }
+  .float {
+    position: absolute; display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 14px; border-radius: var(--radius-pill);
+    background: var(--card); border: 1px solid var(--line-2); box-shadow: var(--shadow-md);
+    font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap;
+    animation: bob 6s ease-in-out infinite;
   }
-
-  /* Offset rather than stacked square: the exchange is two cards passing, and
-     a neat pile would say "wallet" instead. */
-  .hero-cards :global(.card-back) {
-    position: absolute;
-    inset: 0 14% 22% 0;
-    transform: rotate(-6deg);
-    opacity: 0.96;
-  }
-  .hero-cards :global(.card-front) { position: relative; transform: rotate(2.5deg); margin-top: 18%; }
+  .float-a { top: 34%; left: -4%; }
+  .float-b { bottom: 14%; right: 0; animation-delay: -3s; }
+  .float-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-eco { background: var(--success); }
+  .dot-signal { background: var(--signal); }
+  @keyframes bob { 50% { transform: translateY(-8px); } }
 
   .facts-rule {
-    list-style: none;
-    margin: clamp(48px, 8vh, 88px) 0 0;
-    padding: var(--space-xl) 0;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-lg);
+    list-style: none; margin: clamp(40px, 7vh, 80px) 0 0; padding: var(--space-xl) 0;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-lg);
   }
   .facts-rule li { display: flex; flex-direction: column; gap: 4px; }
-  .f-k { font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: -0.03em; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .f-k { font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: -0.03em; color: var(--ink); }
   .f-v { font-size: 13px; line-height: 18px; color: var(--ink-3); }
 
   /* ── Section heads ─────────────────────────────────────────────────── */
-  .sec-head { max-width: 640px; margin-bottom: clamp(32px, 5vw, 56px); }
+  .sec-head { max-width: 680px; margin-bottom: clamp(32px, 5vw, 56px); }
   .sec-head .eyebrow { margin-bottom: var(--space-base); }
   .sec-head .lede { margin-top: var(--space-base); }
 
-  /* ── Features ──────────────────────────────────────────────────────── */
-  .feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden; }
-  .feature { background: var(--card); padding: var(--space-xl); display: flex; flex-direction: column; gap: var(--space-sm); }
+  /* ── Bento: the app's folder tabs on each tile ─────────────────────── */
+  .bento { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 52px var(--space-base); padding-top: 30px; }
+  .tile {
+    position: relative; display: flex; flex-direction: column; gap: var(--space-sm);
+    padding: var(--space-xl); background: var(--card);
+    border: 1px solid var(--line-2); border-radius: 0 var(--radius-card) var(--radius-card) var(--radius-card);
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .tile:hover { transform: translateY(-3px); border-color: var(--accent); }
+  .tile-wide { grid-column: span 2; background: linear-gradient(135deg, var(--card), var(--accent-tint)); }
+  .tile-full { grid-column: 1 / -1; background: linear-gradient(135deg, var(--card), var(--signal-tint)); }
+  /* The tab sits on the tile's top edge, like REACH / REMINDERS / POSTS in the app. */
+  .tile-tab {
+    position: absolute; left: -1px; bottom: 100%;
+    padding: 7px 14px 6px; background: var(--card);
+    border: 1px solid var(--line-2); border-bottom: 0; border-radius: var(--radius-control) var(--radius-control) 0 0;
+    font-family: var(--font-display); font-weight: 600; font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--ink-2);
+  }
+  .tile:hover .tile-tab { border-color: var(--accent); color: var(--accent-ink); }
+  .ways { list-style: none; margin: var(--space-sm) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+
+  /* ── Showcase ──────────────────────────────────────────────────────── */
+  .show-band { background: var(--stock-2); border-block: 1px solid var(--line); }
+  .show-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .show-copy .display-xl { margin: var(--space-base) 0; }
+  .ticks { list-style: none; margin: var(--space-xl) 0 0; padding: 0; display: grid; gap: var(--space-md); }
+  .ticks li { position: relative; padding-left: 28px; color: var(--ink-2); font-size: 15px; line-height: 22px; }
+  .ticks li::before {
+    content: ''; position: absolute; left: 0; top: 3px; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--accent-tint-2);
+  }
+  .ticks li::after {
+    content: ''; position: absolute; left: 5px; top: 8px; width: 6px; height: 3px;
+    border-left: 1.5px solid var(--accent); border-bottom: 1.5px solid var(--accent); transform: rotate(-45deg);
+  }
+  .show-phones { display: flex; justify-content: center; gap: clamp(12px, 3vw, 28px); }
+  .show-phones .phone { width: min(240px, 46%); }
+  .phone-tilt-l { transform: rotate(-3deg) translateY(16px); }
+  .phone-tilt-r { transform: rotate(3deg) translateY(-16px); }
+
+  /* ── The public page ───────────────────────────────────────────────── */
+  .page-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .page-grid .display-xl { margin: var(--space-base) 0; }
+  .pagemock {
+    display: flex; flex-direction: column; gap: var(--space-md);
+    padding: var(--space-base); border-radius: var(--radius-sheet);
+    background: var(--card); border: 1px solid var(--line-2); box-shadow: var(--shadow-card);
+    max-width: 400px; margin-inline: auto; width: 100%;
+  }
+  .pm-banner { aspect-ratio: 3 / 1; border-radius: var(--radius-card); background: linear-gradient(135deg, var(--accent), var(--signal-2)); }
+  .pm-row { display: flex; align-items: flex-end; gap: var(--space-md); margin-top: -40px; padding-inline: var(--space-sm); }
+  .pm-avatar {
+    width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; flex: none;
+    background: var(--signal); color: #fff; border: 4px solid var(--card);
+    font-family: var(--font-display); font-weight: 700; font-size: 24px;
+  }
+  .pm-cta {
+    flex: 1; text-align: center; padding: 10px; border-radius: var(--radius-control);
+    background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: 14px; margin-bottom: 6px;
+  }
+  .pm-socials { display: flex; gap: 8px; }
+  .pm-socials i { width: 30px; height: 30px; border-radius: 9px; border: 1px solid var(--line-2); }
+  .pm-post { display: flex; gap: var(--space-md); align-items: center; padding: 10px; border: 1px solid var(--line); border-radius: var(--radius-control); }
+  .pm-post b { width: 44px; height: 44px; border-radius: 8px; background: var(--stock-3); flex: none; }
+  .pm-post span { display: grid; gap: 6px; flex: 1; }
+  .pm-post em { display: block; height: 8px; border-radius: 4px; background: var(--stock-3); }
+  .pm-post em + em { width: 60%; }
+  .pm-carousel { display: flex; justify-content: center; gap: 6px; }
+  .pm-carousel i { width: 7px; height: 7px; border-radius: 99px; background: var(--line-2); }
+  .pm-carousel i.on { width: 18px; background: var(--accent); }
+
+  .parts { margin: var(--space-xl) 0 0; display: grid; gap: 2px; }
+  .parts > div { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: var(--space-base); padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .parts dt { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--ink); }
+  .parts dd { margin: 0; font-size: 14px; color: var(--ink-2); }
 
   /* ── Steps ─────────────────────────────────────────────────────────── */
   .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-xl); }
-  .step { display: flex; flex-direction: column; gap: var(--space-md); border-top: 2px solid var(--accent); padding-top: var(--space-base); }
-  .step-n { font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 1.4px; color: var(--accent); font-variant-numeric: tabular-nums; }
-  .step h3 { margin-bottom: 6px; }
-
-  /* A phone screenshot is phone-shaped. Rendered at container width it ran for
-     two viewports and became the section instead of illustrating it. */
-  .shot { margin: clamp(40px, 6vw, 64px) auto 0; max-width: 300px; text-align: center; }
-  .shot img {
-    width: 100%;
-    height: auto;
-    border-radius: var(--radius-sheet);
-    border: 1px solid var(--line-2);
-    background: var(--card);
-    box-shadow: var(--shadow-md);
-  }
-  .shot figcaption { margin-top: var(--space-base); }
+  .step { display: flex; flex-direction: column; gap: var(--space-sm); border-top: 2px solid var(--accent); padding-top: var(--space-base); }
+  .step-n { font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 1.4px; color: var(--accent); }
 
   /* ── Impact ────────────────────────────────────────────────────────── */
-  /* Ecology is the one claim allowed the success colour, and it gets it
-     nowhere else on the site. */
   .eco-band { background: var(--stock-2); border-block: 1px solid var(--line); }
   .eco-eyebrow { color: var(--success); }
   .eco-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr); gap: clamp(32px, 5vw, 64px); align-items: center; }
+  .eco-grid .display-xl { margin: var(--space-base) 0; }
   .eco-ctas { display: flex; gap: var(--space-md); flex-wrap: wrap; margin-top: var(--space-xl); }
-  .eco-grid .display-xl { margin: var(--space-base) 0 var(--space-base); }
-
   .calc { display: flex; flex-direction: column; gap: var(--space-base); }
   .calc-rows { margin: 0; display: flex; flex-direction: column; }
   .calc-rows > div { display: flex; justify-content: space-between; gap: var(--space-md); padding: 11px 0; border-bottom: 1px solid var(--line); }
   .calc-rows dt { font-size: 14px; color: var(--ink-2); }
-  .calc-rows dd { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .calc-rows dd { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 15px; }
   .calc-total { border-bottom: 0 !important; }
   .calc-total dt { color: var(--ink); font-weight: 500; }
   .calc-total dd { color: var(--success); font-size: 20px; }
@@ -464,32 +615,13 @@ const included = [
   /* ── Pricing ───────────────────────────────────────────────────────── */
   .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-base); align-items: start; }
   .plan {
-    position: relative;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-card);
-    padding: var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    height: 100%;
+    position: relative; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card);
+    padding: var(--space-xl); display: flex; flex-direction: column; gap: var(--space-md); height: 100%;
   }
-  /* The recommended plan is marked by a heavier border, not a coloured fill —
-     spending the accent on a whole panel is what makes a pricing table shout. */
   .plan-featured { border-color: var(--accent); border-width: 2px; }
-  /* The flag straddles the panel's own border, so it has to paint over it.
-     `chip-signal` is a 10%-alpha tint, which let the blue border show straight
-     through the badge and read as a line drawn across the price. Solid fill and
-     an explicit stacking order fix both. */
   .plan-flag {
-    position: absolute;
-    top: -12px;
-    left: var(--space-xl);
-    z-index: 1;
-    background: var(--signal);
-    color: #fff;
-    border: 0;
-    box-shadow: 0 0 0 3px var(--card);
+    position: absolute; top: -12px; left: var(--space-xl); z-index: 1;
+    background: var(--signal); color: #fff; border: 0; box-shadow: 0 0 0 3px var(--card);
   }
   .price { font-family: var(--font-display); font-weight: 700; font-size: 34px; letter-spacing: -0.03em; margin: 0; }
   .price span { display: block; font-family: var(--font-body); font-weight: 400; font-size: 13px; letter-spacing: 0; color: var(--ink-3); margin-top: 2px; }
@@ -498,79 +630,55 @@ const included = [
   .plan-list li::before { content: ''; position: absolute; left: 0; top: 8px; width: 9px; height: 5px; border-left: 1.5px solid var(--accent); border-bottom: 1.5px solid var(--accent); transform: rotate(-45deg); }
   .plan .btn { margin-top: var(--space-base); }
 
-  .included { margin-top: var(--space-xxl); padding-top: var(--space-xl); border-top: 1px solid var(--line); }
-  .included .eyebrow { margin-bottom: var(--space-base); }
-  .included-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-sm) var(--space-base); }
-  .included-list li { font-size: 14px; color: var(--ink-2); }
-  .included-list li + li::before { content: '·'; margin-right: var(--space-base); color: var(--ink-3); }
-
   /* ── Teams ─────────────────────────────────────────────────────────── */
   .team-band { background: var(--stock-2); border-block: 1px solid var(--line); }
+  /* A shaded band after a plain one keeps its own top padding; the global
+     .band + .band rule removes it, which pinned the eyebrow to the edge. */
+  .show-band, .eco-band, .team-band { padding-top: var(--band-y); }
   .team-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr); gap: clamp(32px, 5vw, 64px); align-items: center; }
   .team-grid .display-xl { margin: var(--space-base) 0; }
   .team-ctas { display: flex; gap: var(--space-md); flex-wrap: wrap; margin-top: var(--space-xl); }
   .team-facts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-base); }
-  .team-facts li { font-size: 14px; line-height: 21px; color: var(--ink-2); padding-left: var(--space-base); border-left: 2px solid var(--line-2); }
+  .team-facts li { font-size: 14px; line-height: 21px; color: var(--ink-2); padding-left: var(--space-base); border-left: 2px solid var(--accent); }
   .team-facts strong { color: var(--ink); font-weight: 600; }
 
+  /* ── FAQ ───────────────────────────────────────────────────────────── */
+  .faq-wrap { max-width: 860px; }
+  .faq { display: grid; gap: var(--space-sm); }
+  .faq details { border: 1px solid var(--line-2); border-radius: var(--radius-card); background: var(--card); padding: 0 var(--space-lg); }
+  .faq summary {
+    cursor: pointer; list-style: none; padding: var(--space-base) 0;
+    font-family: var(--font-display); font-weight: 600; font-size: 16px; color: var(--ink);
+    display: flex; justify-content: space-between; gap: var(--space-md);
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: '+'; color: var(--accent); font-size: 20px; line-height: 1; }
+  .faq details[open] summary::after { content: '–'; }
+  .faq details p { margin: 0 0 var(--space-base); }
+
   /* ── Close ─────────────────────────────────────────────────────────── */
-  .close { text-align: center; max-width: 720px; margin-inline: auto; }
-  .close-ctas { display: flex; gap: var(--space-md); flex-wrap: wrap; justify-content: center; margin-top: var(--space-xl); }
+  .close { text-align: center; max-width: 720px; margin-inline: auto; display: flex; flex-direction: column; align-items: center; gap: var(--space-base); }
+  .close-ctas { display: flex; gap: var(--space-md); flex-wrap: wrap; justify-content: center; margin-top: var(--space-base); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .float { animation: none; }
+    .tile { transition: none; }
+  }
 
   /* ── Responsive ────────────────────────────────────────────────────── */
   @media (max-width: 980px) {
-    /* minmax(0, 1fr): plain `1fr` is minmax(auto, 1fr), and auto is
-       min-content — which is how a headline set the page width. */
-    .hero-grid, .eco-grid, .team-grid { grid-template-columns: minmax(0, 1fr); }
-    .hero-cards { max-width: 460px; padding-bottom: 16%; }
-    .steps { grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); }
-    .plans { grid-template-columns: minmax(0, 1fr); }
+    .hero-grid, .show-grid, .page-grid, .eco-grid, .team-grid { grid-template-columns: minmax(0, 1fr); }
+    .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .steps, .plans { grid-template-columns: minmax(0, 1fr); }
     .plan-featured { order: -1; }
+    .page-grid .pagemock { order: 1; }
   }
   @media (max-width: 720px) {
-    .feature-grid { grid-template-columns: minmax(0, 1fr); }
+    .bento { grid-template-columns: minmax(0, 1fr); }
+    .tile-wide, .tile-full { grid-column: auto; }
     .facts-rule { grid-template-columns: 1fr 1fr; gap: var(--space-base) var(--space-lg); }
     .f-k { font-size: 22px; }
+    .parts > div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+    .float { font-size: 12px; padding: 8px 12px; }
   }
 </style>
-
-<script>
-  /**
-   * The hero's one moving part.
-   *
-   * The headline says a job title changes everywhere at once. Rather than
-   * asserting it beside a still card, the card performs it: the role line is
-   * replaced in place while the card stays put, and a status line confirms it
-   * the way the app would.
-   *
-   * Deliberately slow — one change every four seconds. Faster reads as a
-   * carousel, which would say "here are some cards" instead of "this is one
-   * card, changing".
-   */
-  const ROLES = [
-    'What you do',
-    'Head of Partnerships',
-    'VP, Partnerships',
-    'Co-founder',
-  ];
-
-  const card = document.querySelector<HTMLElement>('.card-front');
-  const role = card?.querySelector<HTMLElement>('.co-role');
-  const live = document.querySelector<HTMLElement>('.hero-live');
-  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (card && role && !still) {
-    let i = 0;
-    setInterval(() => {
-      card.classList.add('is-swapping');
-      setTimeout(() => {
-        i = (i + 1) % ROLES.length;
-        role.textContent = ROLES[i];
-        card.classList.remove('is-swapping');
-        // The status line appears only after the first real change, so it is
-        // never claiming something the reader has not seen happen.
-        live?.classList.add('is-on');
-      }, 280);
-    }, 4000);
-  }
-</script>
