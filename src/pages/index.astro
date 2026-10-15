@@ -4,7 +4,8 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import CardObject from '../components/CardObject.astro';
 import GetApp from '../components/GetApp.astro';
-import { COMPANY_URL, SIGN_IN_URL, SITE_URL, STORE_LINKS } from '../lib/site';
+import StoreBadges from '../components/StoreBadges.astro';
+import { COMPANY_URL, SIGN_IN_URL, SITE_URL } from '../lib/site';
 
 /**
  * The home page.
@@ -187,7 +188,7 @@ const schema = {
       <!-- The app itself, with the two things it does after the handshake. -->
       <div class="hero-visual">
         <figure class="phone phone-hero">
-          <img src="/assets/app-home.jpg" width="640" height="1389"
+          <img src="/assets/app-home.jpg" width="640" height="1300"
                alt="Cardly home screen with a business card, its QR code and a follow-up reminder" fetchpriority="high" />
         </figure>
         <div class="float float-a" aria-hidden="true">
@@ -256,13 +257,43 @@ const schema = {
       </div>
       <div class="show-phones">
         <figure class="phone phone-tilt-l">
-          <img src="/assets/app-notes.jpg" width="640" height="1389" loading="lazy"
+          <img src="/assets/app-notes.jpg" width="640" height="1300" loading="lazy"
                alt="Cardly notes: a folder for John Doe and a note about meeting him at Web Summit" />
         </figure>
         <figure class="phone phone-tilt-r">
-          <img src="/assets/app-reminders.jpg" width="640" height="1389" loading="lazy"
+          <img src="/assets/app-reminders.jpg" width="640" height="1300" loading="lazy"
                alt="Cardly reminders: an urgent follow-up with John Doe at a coffee shop, tagged #client" />
         </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contacts and reach ───────────────────────────────────────────── -->
+  <section class="band" id="connections">
+    <div class="container show-grid reverse">
+      <div class="show-phones">
+        <figure class="phone phone-tilt-l">
+          <img src="/assets/app-connections.jpg" width="640" height="1300" loading="lazy"
+               alt="Cardly connections: cards collected by QR code and by photographing paper cards, ready to send to HubSpot" />
+        </figure>
+        <figure class="phone phone-tilt-r">
+          <img src="/assets/app-reach.jpg" width="640" height="1300" loading="lazy"
+               alt="Cardly reach: page opens, saves and post readers for each of your cards" />
+        </figure>
+      </div>
+      <div class="show-copy">
+        <p class="eyebrow">Everyone you meet, in one place</p>
+        <h2 class="display-xl">Collect cards. See where yours went.</h2>
+        <p class="lede">
+          Scan a Cardly code or photograph a paper card — every contact lands in Connections,
+          searchable and one tap from HubSpot. Reach shows how many people opened, saved and read
+          each of your cards, and how many paper cards you didn’t print.
+        </p>
+        <ul class="ticks">
+          <li>Paper cards read by AI from a single photo</li>
+          <li>Send any contact to HubSpot in one tap</li>
+          <li>Opens, saves and readers for every card you hand out</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -351,6 +382,25 @@ const schema = {
           Ten cards to a sheet, 8,333 sheets to a tree. Round numbers, shown so you can check them.
         </p>
       </div>
+    </div>
+  </section>
+
+  <!-- ── On the web ───────────────────────────────────────────────────── -->
+  <section class="band" id="web">
+    <div class="container">
+      <div class="sec-head">
+        <p class="eyebrow">On the web too</p>
+        <h2 class="display-xl">Your desk, your card, the same account.</h2>
+        <p class="lede">
+          Edit your cards, write posts, run your company and see your reach from any browser. It is
+          the same Cardly as on your phone — change something in one and the other already shows it.
+        </p>
+      </div>
+      <figure class="browser">
+        <div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>app.usecardly.app</span></div>
+        <img src="/assets/web-dashboard.jpg" width="1154" height="992" loading="lazy"
+             alt="The Cardly web dashboard: your card with its QR code, share link, posts, reach and company" />
+      </figure>
     </div>
   </section>
 
@@ -448,11 +498,10 @@ const schema = {
       <div class="close">
         <p class="chip chip-eco">Paperless since your first hello</p>
         <h2 class="display-xl">Your next handshake deserves better than paper.</h2>
-        <div class="close-ctas">
-          <GetApp class="btn btn-primary btn-lg" fallbackHref={`${SIGN_IN_URL}?mode=signup`} fallbackLabel="Create your card" />
-          <a href={STORE_LINKS.ios} class="btn btn-secondary btn-lg">App Store</a>
-          <a href={STORE_LINKS.android} class="btn btn-secondary btn-lg">Google Play</a>
-        </div>
+        <StoreBadges class="close-badges" />
+        <p class="small tone-tertiary">
+          Or <a class="linkish" href={`${SIGN_IN_URL}?mode=signup`}>create your card on the web</a>.
+        </p>
       </div>
     </div>
   </section>
@@ -487,11 +536,11 @@ const schema = {
   /* The screenshots carry the phone's clock and battery along the top; the
      frame starts just below them so the app is the first thing seen. */
   .phone {
-    margin: 0; position: relative; aspect-ratio: 640 / 1250; overflow: hidden;
+    margin: 0; position: relative; aspect-ratio: 640 / 1300; overflow: hidden;
     border-radius: 34px; border: 8px solid #0B0F14; background: #0B0F14;
     box-shadow: var(--shadow-card), 0 0 0 1px var(--line-2);
   }
-  .phone img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: bottom; }
+  .phone img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
   .hero-visual { position: relative; display: grid; place-items: center; padding: 4% 0 8%; }
   .phone-hero { width: min(300px, 78%); transform: rotate(2deg); }
 
@@ -560,6 +609,17 @@ const schema = {
   }
   .show-phones { display: flex; justify-content: center; gap: clamp(12px, 3vw, 28px); }
   .show-phones .phone { width: min(240px, 46%); }
+  .show-grid.reverse .show-copy .display-xl { margin: var(--space-base) 0; }
+  .browser {
+    margin: 0; border-radius: var(--radius-sheet); overflow: hidden;
+    border: 1px solid var(--line-2); box-shadow: var(--shadow-card); background: var(--card);
+  }
+  .browser-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--stock-2); }
+  .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line-2); }
+  .browser-bar span { margin-left: 10px; font-size: 12px; color: var(--ink-3); }
+  .browser img { display: block; width: 100%; height: auto; }
+  .close-badges { margin-top: var(--space-base); }
+  .linkish { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
   .phone-tilt-l { transform: rotate(-3deg) translateY(16px); }
   .phone-tilt-r { transform: rotate(3deg) translateY(-16px); }
 

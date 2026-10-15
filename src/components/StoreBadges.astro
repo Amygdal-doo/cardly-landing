@@ -1,0 +1,65 @@
+---
+import { STORE_LINKS } from '../lib/site';
+
+/**
+ * Get the app: the two store badges and a code to scan.
+ *
+ * The same block the web dashboard shows. The code opens this site, which
+ * already sends an iPhone to the App Store and an Android phone to Google
+ * Play — the person scanning is on a phone we cannot identify from here.
+ * Drawn in the ink colour, so it works in every theme without a white tile.
+ */
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+---
+
+<div class:list={['get-app', cls]}>
+  <div class="badges">
+    <a class="store" href={STORE_LINKS.ios} aria-label="Download Cardly on the App Store">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="store-mark">
+        <path fill="currentColor" d="M16.4 12.7c0-2.1 1.7-3.1 1.8-3.2-1-1.4-2.5-1.6-3-1.7-1.3-.1-2.5.8-3.1.8-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2-1.4 2.5-.4 6.3 1 8.4.7 1 1.5 2.2 2.6 2.1 1-.04 1.4-.7 2.7-.7 1.3 0 1.6.7 2.7.6 1.1 0 1.8-1 2.5-2 .8-1.2 1.1-2.3 1.1-2.3s-2.1-.8-2.2-3.3zM14.3 5.6c.6-.7 1-1.6.9-2.6-.8 0-1.9.6-2.5 1.3-.5.6-1 1.6-.9 2.5.9.1 1.9-.5 2.5-1.2z"/>
+      </svg>
+      <span class="store-text"><span class="store-small">Download on the</span><span class="store-big">App&nbsp;Store</span></span>
+    </a>
+    <a class="store" href={STORE_LINKS.android} aria-label="Get Cardly on Google Play">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="store-mark">
+        <path fill="#34A853" d="M4 21.2 14.2 12 4 2.8c-.3.2-.5.6-.5 1.1v16.2c0 .5.2.9.5 1.1z" opacity=".95"/>
+        <path fill="#FBBC04" d="m17.6 15.4-3.4-3.4 3.4-3.4 3.3 1.9c.7.4.7 1.5 0 1.9l-3.3 1.9z"/>
+        <path fill="#EA4335" d="M4 21.2c.3.2.8.2 1.2 0l12.4-7.1-3.4-3.4L4 21.2z"/>
+        <path fill="#4285F4" d="M4 2.8 14.2 12l3.4-3.4L5.2 1.5c-.4-.2-.9-.2-1.2 0z"/>
+      </svg>
+      <span class="store-text"><span class="store-small">Get it on</span><span class="store-big">Google&nbsp;Play</span></span>
+    </a>
+  </div>
+  <figure class="qr">
+    <div class="qr-tile">
+      <svg viewBox="0 0 33 33" shape-rendering="crispEdges" role="img" aria-label="QR code to install Cardly">
+        <path stroke="currentColor" d="M4 4.5h7m3 0h2m3 0h1m2 0h7M4 5.5h1m5 0h1m1 0h3m4 0h2m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m5 0h1m1 0h2m2 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h3m3 0h2m2 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m2 0h3m1 0h4m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M16 11.5h2M4 12.5h1m1 0h1m1 0h1m1 0h1m3 0h4m2 0h1m3 0h1m2 0h1M4 13.5h1m2 0h1m4 0h1m1 0h1m1 0h1m3 0h1m1 0h1m5 0h1M5 14.5h1m1 0h1m2 0h1m2 0h3m5 0h3m2 0h3M6 15.5h2m1 0h1m4 0h4m1 0h2m1 0h1m4 0h1M4 16.5h2m1 0h1m1 0h3m2 0h4m2 0h4m1 0h1m1 0h2M5 17.5h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1m2 0h1M4 18.5h1m1 0h2m2 0h2m1 0h1m4 0h1m2 0h3m2 0h3M5 19.5h1m2 0h2m1 0h2m3 0h3m3 0h1m1 0h1m2 0h1M4 20.5h1m2 0h2m1 0h9m1 0h6M12 21.5h2m6 0h1m3 0h2m1 0h2M4 22.5h7m3 0h1m1 0h2m1 0h2m1 0h1m1 0h2m1 0h2M4 23.5h1m5 0h1m4 0h1m1 0h1m2 0h1m3 0h2m1 0h2M4 24.5h1m1 0h3m1 0h1m1 0h2m3 0h1m2 0h6M4 25.5h1m1 0h3m1 0h1m2 0h1m2 0h2m3 0h1m1 0h4M4 26.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h3m3 0h1m3 0h1M4 27.5h1m5 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h2m1 0h1M4 28.5h7m1 0h2m3 0h1m1 0h2m2 0h1m3 0h2"/>
+      </svg>
+    </div>
+    <figcaption>Scan to install<br />on your phone</figcaption>
+  </figure>
+</div>
+
+<style>
+  .get-app { display: inline-flex; align-items: center; gap: var(--space-lg); }
+  .badges { display: flex; flex-direction: column; gap: var(--space-sm); }
+  .store {
+    display: inline-flex; align-items: center; gap: 10px; min-width: 186px;
+    padding: 10px 16px; border-radius: 12px;
+    background: var(--card); border: 1px solid var(--line-2); color: var(--ink);
+    text-decoration: none; line-height: 1; transition: border-color .15s ease;
+  }
+  .store:hover { border-color: var(--ink-3); }
+  .store-mark { width: 22px; height: 22px; flex: none; }
+  .store-text { display: flex; flex-direction: column; gap: 3px; text-align: left; }
+  .store-small { font-size: 10px; color: var(--ink-2); }
+  .store-big { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+  .qr { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .qr-tile { padding: 10px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--card); color: var(--ink); }
+  .qr-tile svg { display: block; width: 104px; height: 104px; }
+  .qr figcaption { font-size: 12px; line-height: 16px; color: var(--ink-3); text-align: center; }
+  @media (max-width: 520px) {
+    .get-app { flex-direction: column; }
+  }
+</style>
