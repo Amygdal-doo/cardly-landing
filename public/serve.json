@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/terms",
+      "destination": "https://app.usecardly.app/terms",
+      "type": 301
+    },
+    {
       "source": "/signin",
       "destination": "https://app.usecardly.app/signin",
       "type": 301
