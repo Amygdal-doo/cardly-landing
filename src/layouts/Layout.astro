@@ -94,8 +94,13 @@ const organisationSchema = {
     </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- The Cardly mark, at the sizes search engines and phones ask for:
+         Google takes a multiple of 48px, iOS a 180px touch icon. -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <title>{title}</title>
     <meta name="description" content={description} />
