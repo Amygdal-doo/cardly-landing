@@ -18,10 +18,10 @@ import { COMPANY_URL, SIGN_IN_URL, SITE_URL } from '../lib/site';
 
 const TITLE = 'Cardly — the digital business card. A handshake shouldn’t cost a tree.';
 const DESCRIPTION =
-  'Cardly is the eco-friendly digital business card: share by QR, link, NFC or Apple & Google Wallet, scan paper cards with AI, keep notes and follow-up reminders, and replace your Linktree with one public page.';
+  'Cardly is the eco-friendly digital business card: share by QR, link or Apple & Google Wallet, scan paper cards with AI, keep notes and follow-up reminders, and replace your Linktree with one public page.';
 
 /** Sharing is listed by channel because that is how people ask: "can I…?" */
-const shareWays = ['QR code', 'Link', 'NFC tap', 'Apple Wallet', 'Google Wallet'];
+const shareWays = ['QR code', 'Link', 'Apple Wallet', 'Google Wallet'];
 
 const features = [
   {
@@ -83,7 +83,7 @@ const steps = [
   },
   {
     title: 'Hand it over',
-    body: 'QR, link, NFC or Wallet. It opens in whatever browser they have — no app, no account.',
+    body: 'QR, link or Wallet. It opens in whatever browser they have — no app, no account.',
   },
   {
     title: 'Follow up',
@@ -94,7 +94,7 @@ const steps = [
 const faqs = [
   {
     q: 'Do the people I meet need the Cardly app?',
-    a: 'No. Your card opens in any phone’s browser from a QR code, a link or an NFC tap. They can save you to their contacts with one tap, or keep the whole card in Cardly if they have it.',
+    a: 'No. Your card opens in any phone’s browser from a QR code or a link. They can save you to their contacts with one tap, or keep the whole card in Cardly if they have it.',
   },
   {
     q: 'Can Cardly replace my Linktree?',
@@ -134,7 +134,7 @@ const schema = {
         { '@type': 'Offer', name: 'Pro yearly', price: '59.99', priceCurrency: 'USD' },
       ],
       featureList: [
-        'Digital business card with QR code, link and NFC sharing',
+        'Digital business card with QR code, link and Wallet sharing',
         'Apple Wallet and Google Wallet passes',
         'AI business card scanner',
         'Contact notes and follow-up reminders',
@@ -170,7 +170,7 @@ const schema = {
         <h1 class="display-hero">A handshake shouldn’t cost&nbsp;a&nbsp;tree.</h1>
         <p class="lede">
           Cardly is your business card, your link-in-bio and your follow-up list in one app. Share it
-          by QR, link, NFC or Wallet, scan theirs back, and never print again.
+          by QR, link or Wallet, scan theirs back, and never print again.
         </p>
 
         <div class="hero-ctas">
@@ -417,7 +417,7 @@ const schema = {
           <h3 class="display-s">Free</h3>
           <p class="price">$0<span>forever</span></p>
           <ul class="plan-list">
-            <li>One card, shared by QR, link and NFC</li>
+            <li>One card, shared by QR, link and Wallet</li>
             <li>Scan and save other people’s cards</li>
             <li>Notes and follow-up reminders</li>
           </ul>
